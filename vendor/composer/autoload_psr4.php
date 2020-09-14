@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'IADireito\\' => array($vendorDir . '/iadireito/php_classes/src'),
+    'IADireito\\' => array($vendorDir . '/iadireito/src'),
 );

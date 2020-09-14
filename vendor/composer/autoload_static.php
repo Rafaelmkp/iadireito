@@ -16,7 +16,7 @@ class ComposerStaticInit9f4a2508a62dc25de84425cc2521c873
     public static $prefixDirsPsr4 = array (
         'IADireito\\' => 
         array (
-            0 => __DIR__ . '/..' . '/iadireito/php_classes/src',
+            0 => __DIR__ . '/..' . '/iadireito/src',
         ),
     );
 
