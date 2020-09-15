@@ -1,13 +1,13 @@
 <?php 
 
-namespace Ecomproj\DB;
+namespace IADireito\DB;
 
 class Sql {
 
 	const HOSTNAME = "127.0.0.1";
-	const USERNAME = "root";
-	const PASSWORD = "";
-	const DBNAME = "db_ecommerce";
+	const USERNAME = "postgres";
+	const PASSWORD = "admin";
+	const DBNAME = "IADireito";
 
 	private $conn;
 
@@ -15,7 +15,7 @@ class Sql {
 	{
 
 		$this->conn = new \PDO(
-			"mysql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME, 
+			"pgsql:dbname=".Sql::DBNAME.";host=".Sql::HOSTNAME, 
 			Sql::USERNAME,
 			Sql::PASSWORD
 		);

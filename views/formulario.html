@@ -56,7 +56,7 @@ input {
   </tr>
    <tr>
     <td><label for="n_processo">Processo número:</label></td>
-    <td><input type="text" id="n_processo" name="n_processo"></td>
+    <td><input type="text" id="n_processo" name="n_processo" value="{$summons.pub_numero_processo}"></td>
   </tr>
    <tr>
     <td><label for="natureza">Natureza:</label></td>
@@ -154,7 +154,7 @@ input {
   </tr>
   <tr>
     <td><label for="conteúdo">Conteúdo:</label></td>
-    <td><input type="text" multiline rows="30" id="conteudo" name="conteudo"></td>
+    <td><textarea id="conteudo" name="conteudo" rows="4" cols="50" value="{$summons.pub_conteudo}"></textarea></td>
   </tr>
   <tr>
     <td><label for="recurso">Recurso:</label></td>
