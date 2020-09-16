@@ -157,7 +157,7 @@ input {
     <td><textarea id="conteudo" name="conteudo" rows="12" cols="50"><?php echo htmlspecialchars( $summons["pub_conteudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></td>
   </tr>
   <tr>
-    <td><label for="recurso">Recurso:</label></td>
+    <td><label for="tipo_peca">Natureza da decisão:</label></td>
     <td><select name="recurso" id="recurso">
 	<option value="federal">Selecione</option>
   <option value="instrumento">Agravo de Instrumento</option>
@@ -181,6 +181,32 @@ input {
   <option value="ordinario">Recurso Ordinário</option>
   <option value="revisao">Revisão Criminal</option>
   <option value="revista">Recurso de Revista</option>
+</select></td>
+<tr>
+  <td><label for="tipo_peca">Peça a produzir:</label></td>
+  <td><select name="recurso" id="recurso">
+<option value="federal">Selecione</option>
+<option value="instrumento">Agravo de Instrumento</option>
+<option value="interno">Agravo Interno</option>
+<option value="infringentes">Agravo em Recurso Especial</option>
+<option value="infringentes">Agravo em Recurso Extraordinário</option>
+<option value="regimental">Agravo Regimental</option>
+<option value="apelacao">Apelação</option>
+<option value="carta">Carta Testemunhável</option>
+<option value="declaratorios">Embargos declaratórios</option>
+<option value="divergencia">Embargos de divergência</option>
+<option value="infringentes">Embargos infringentes</option>
+<option value="corpus">Habeas Corpus</option>
+<option value="data">Habeas Data</option>
+<option value="seguranca">Mandado de Segurança</option>
+<option value="manifestacao">Manifestação</option>
+<option value="rec_adm">Recurso administrativo</option>
+<option value="estrito">Recurso em Sentido Estrito</option>
+<option value="rec_especial">Recurso Especial</option>
+<option value="extraordinario">Recurso Extraordinário</option>
+<option value="ordinario">Recurso Ordinário</option>
+<option value="revisao">Revisão Criminal</option>
+<option value="revista">Recurso de Revista</option>
 </select></td>
   </tr>
   <tr>

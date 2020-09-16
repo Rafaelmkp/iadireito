@@ -22,8 +22,6 @@ $app->get('/', function()
         "footer" => false
     ]);
     
-
-
     $page->setTpl("formulario", array(
         "summons"=>$summons->getValues()
     ));
