@@ -26,6 +26,10 @@ class Summons extends Model {
             echo "não foi possivel retornar uma intimação";
         }
     }
+
+    public function saveSummons() {
+        
+    }
     
 
 }

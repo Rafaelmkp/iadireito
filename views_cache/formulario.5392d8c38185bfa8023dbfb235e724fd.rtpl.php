@@ -154,7 +154,7 @@ input {
   </tr>
   <tr>
     <td><label for="conteúdo">Conteúdo:</label></td>
-    <td><input type="text" id="conteudo" name="conteudo" value="<?php echo htmlspecialchars( $summons["pub_conteudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></td>
+    <td><textarea id="conteudo" name="conteudo" rows="12" cols="50"><?php echo htmlspecialchars( $summons["pub_conteudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></td>
   </tr>
   <tr>
     <td><label for="recurso">Recurso:</label></td>
