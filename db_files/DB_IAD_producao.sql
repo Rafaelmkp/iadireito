@@ -1,6 +1,6 @@
 create database processos;
 
---table publicacao nao-classif
+--table publicacao nao-classificadas
 CREATE TABLE processos.publicacao_unirriter (
 	pub_id bigserial NOT NULL,
 	pub_cnj_id int8 NOT NULL DEFAULT 1,
@@ -29,8 +29,6 @@ CREATE TABLE processos.publicacao_unirriter (
 	CONSTRAINT pk_publicacao_unirriter PRIMARY KEY (pub_id)
 );
 
---table publicacoes classific
-
 --table advogado
 create table processos.advogado (
 	adv_id serial not null,
@@ -43,21 +41,35 @@ create table processos.advogado (
 create table publicacao_advogado (
 	pub_adv_id bigserial not null,
 	adv_id int not null,
-	pub_id bigint not null
+	pub_id bigint not null,
+	constraint pk_publicacao_advogado primary key(pub_adv_id)
 );
 
---tabela reu eh necessaria??
---table reu
-create table reu
-
---table publicacao reu nxm
-
 --table natureza processual
+create table natureza_processual (
+	nat_id serial not null,
+	nat_descricao varchar(32) not null,
+	constraint pk_natureza_processual primary key(nat_id)
+);
 
---tipo de decisao
+--table tipo de decisao
+create table decisao_tipo (
+	dec_id serial not null,
+	dec_descricao varchar(32) not null,
+	constraint pk_decisao_tipo primary key(dec_id)
+);
 
 --table peça a produzir
+create table peca_produzir (
+	pec_id serial not null,
+	pec_descricao varchar(32) not null,
+	constraint pk_peca_produzir primary key(pec_id)
+);
+
+--table publicacoes classificadas
+
 
 --procedure busca pub_nao_classif
+
 
 --procedure salva pub_classif
