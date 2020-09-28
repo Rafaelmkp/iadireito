@@ -1,0 +1,48 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+div {
+  width: 50%;
+  min-width: 250px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+body {
+  margin: 0;
+}
+
+.parent {
+  white-space: nowrap;
+  width: 100%;
+}
+
+.parent > div {
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+  width: 47%;
+}
+
+div.conteudo {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+.hide {
+  display: none;
+}
