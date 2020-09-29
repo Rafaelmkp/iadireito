@@ -1,3 +1,5 @@
+//funcoes pra add advogado no final do codigo
+
 var json_cidades = {
   estados: [
     {
@@ -5754,4 +5756,75 @@ function show1() {
 function show2() {
   document.getElementById('tr1').style.display = 'none';
   document.getElementById('tr2').style.display = 'block';
+}
+
+//Aqui comeca codigo para inserir campos adv
+//Ainda falta desenvolver function pra excluri os campos
+//bem mais simpels do que inserir
+
+let addButton = document.querySelector('#addAdv');
+addButton.addEventListener('click', renderAll);
+
+//variavel pra id de cada campo de advogado
+var advCounter = 0;
+//linha da tabela que vai servir como index
+var trAdv = document.querySelector('#advbtn');
+
+function renderAll() {
+  advCounter++;
+
+  renderAdv();
+  renderOab();
+}
+
+function renderAdv() {
+  let tableDados = document.getElementById('dados');
+  //pega index da row dos botoes
+  let index = trAdv.rowIndex;
+
+  //insere linha na tabela pela index dos botoes
+  let tr = tableDados.insertRow(index);
+
+  let tdLabel = document.createElement('td');
+  tr.appendChild(tdLabel);
+
+  let label = document.createElement('label');
+  tdLabel.appendChild(label);
+  label.setAttribute('for', 'Adv' + advCounter);
+  label.textContent = 'Advogado' + advCounter;
+
+  let tdInput = document.createElement('td');
+  tr.appendChild(tdInput);
+
+  let input = document.createElement('input');
+  tdInput.appendChild(input);
+  input.setAttribute('type', 'text');
+  input.setAttribute('id', 'adv' + advCounter);
+  input.setAttribute('name', 'adv' + advCounter);
+  input.setAttribute('placeholder', 'Nome do adv ' + advCounter);
+}
+
+function renderOab() {
+  let tableDados = document.getElementById('dados');
+  let index = trAdv.rowIndex;
+
+  let tr = tableDados.insertRow(index);
+
+  let tdLabel = document.createElement('td');
+  tr.appendChild(tdLabel);
+
+  let label = document.createElement('label');
+  tdLabel.appendChild(label);
+  label.setAttribute('for', 'Oab' + advCounter);
+  label.textContent = 'Oab' + advCounter;
+
+  let tdInput = document.createElement('td');
+  tr.appendChild(tdInput);
+
+  let input = document.createElement('input');
+  tdInput.appendChild(input);
+  input.setAttribute('type', 'text');
+  input.setAttribute('id', 'oab' + advCounter);
+  input.setAttribute('name', 'oab' + advCounter);
+  input.setAttribute('placeholder', 'Oab do Adv ' + advCounter);
 }

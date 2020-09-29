@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" content="width=device-width, initial-scale=1.0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"   href="../res/style/style.css">
-  <script src="../res/script/script.js"></script>  
-
 </head>
 <body>
 
@@ -45,7 +43,7 @@
             </td>
           </tr>
           <tr>
-            <td><label name=for="vara">Vara:</label></td>
+            <td><label name="vara">Vara:</label></td>
             <td><input type="text" id="vara" name="vara"></td>
           </tr>
           <tr>
@@ -94,14 +92,17 @@
             <td><label for="autor">Autor:</label></td>
             <td><input type="text" id="autor" name="autor"></td>
           </tr>
-          <tr>
-            <td><label for="advogado1">Advogado:</label></td>
-            <td><input type="text" id="advogado1" name="advogado1"></td>
-          </tr>
-          <tr>
-            <td><label for="autor">OAB:</label></td>
-            <td><input type="text" id="oab1" name="oab1"></td>
-          </tr>
+          <tr><td>//////////////////////</td><td>Advogados vao aqui////////////////</td></tr>
+          <!--aqui tr para o botão de inserir adv-->
+            <tr id="advbtn">
+              <td></td>
+              <td>
+                <input type=button id="addAdv" value="Add Advogado">
+                <input type=button id="excludeAdv" value="Excluir Advogado">
+              </td>
+            </tr>
+          <!--fim tr botoes adv-->
+          <tr><td>//////////////////////</td><td>Advogados acabam aqui////////////////</td></tr>
           <tr>
             <td><label for="estado1">Estado:</label></td>
             <td><select name="estado1" id="estado1">
@@ -228,5 +229,6 @@
         <input type="submit" name="b2" value="Enviar">
       </div>
   </form>
+  <script src="../res/script/script.js"></script>
 </body>
 </html>
