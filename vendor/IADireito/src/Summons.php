@@ -27,8 +27,15 @@ class Summons extends Model {
         }
     }
 
-    public function saveSummons() {
-        
+    public function saveSummons() 
+    {
+        $sql = new Sql();
+
+        //query a desenvolver
+        //$sql->query("CALL sp_summons_save(
+        //    :ESTRUTURA, :N_CNJ,  )");
+
+        return true;
     }
     
 

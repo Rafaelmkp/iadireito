@@ -5,6 +5,7 @@ require_once("vendor/autoload.php");
 use \Slim\Slim;
 use \IADireito\Page;
 use \IADireito\Summons;
+use \IADireito\htmlOptions;
 
 $app = new Slim();
 
@@ -12,20 +13,41 @@ $app->config('debug', true);
 
 $app->get('/', function()
 {
-
     $summons = new Summons();
 
     $summons->setSummons();
 
-    $page = new Page([
-        "header" => false,
-        "footer" => false
-    ]);
-    
+    $page = new Page();
+
+    $tipo_decisao = htmlOptions::getTipoDecisaoFromDB();
+    $peca_produzir = htmlOptions::getPecaProduzirFromDB();
+    $natureza = htmlOptions::getNaturezaFromDB();
+
     $page->setTpl("formulario", array(
-        "summons"=>$summons->getValues()
+        "summons"=>$summons->getValues(),
+        "tipo_decisao"=>$tipo_decisao,
+        "peca_produzir" => $peca_produzir,
+        "natureza"=> $natureza
     ));
-    
+});
+
+$app->post('/submit-summons', function () {
+    echo "publicacao classificada!";
+
+    $summons = new Summons();
+    $summons->setData($_POST);
+    $status = $summons->saveSummons($_POST);
+
+    var_dump($summons);
+});
+
+$app->get('/resultado-inclusao', function ($message){
+
+    $page = new Page();
+
+    $page->setTpl("resultado_inclusao", array(
+        $message
+    ));
 });
 
 $app->run();

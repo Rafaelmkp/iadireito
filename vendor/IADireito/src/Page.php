@@ -11,8 +11,8 @@ class Page {
     private $options = [];
     //aray que recebe configs 
     private $defaults = [
-        "header"=>true,
-        "footer"=>true,
+        "header"=>false,
+        "footer"=>false,
         "data"=>[]
     ];
 

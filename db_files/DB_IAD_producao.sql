@@ -71,5 +71,8 @@ create table peca_produzir (
 
 --procedure busca pub_nao_classif
 
-
 --procedure salva pub_classif
+	--salvar publicação
+	--salvar advogado
+	--salvar advogado
+	--salvar advogado

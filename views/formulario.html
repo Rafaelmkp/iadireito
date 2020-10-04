@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <form action="/action_page.php" autocomplete="off">
+  <form action="/submit-summons" method="post" autocomplete="off">
     <div class="parent">
       <h1 align="center">Dados Processuais</h1>
       <div>
@@ -31,14 +31,9 @@
           <tr>
             <td><label for="natureza">Natureza:</label></td>
             <td><select name="natureza" id="natureza">
-                <option value="branco"> </option>
-                <option value="administrativa">Administrativa</option>
-                <option value="trabalhista">Bancária</option>
-                <option value="civil">Civil</option>
-                <option value="trabalhista">Empresarial</option>
-                <option value="trabalhista">Família</option>
-                <option value="penal">Penal</option>
-                <option value="trabalhista">Trabalhista</option>
+              {loop="$natureza"}
+                <option value="{$value.nat_value}">{$value.nat_desc} </option>
+              {/loop}
               </select>
             </td>
           </tr>
@@ -92,7 +87,6 @@
             <td><label for="autor">Autor:</label></td>
             <td><input type="text" id="autor" name="autor"></td>
           </tr>
-          <tr><td>//////////////////////</td><td>Advogados vao aqui////////////////</td></tr>
           <!--aqui tr para o botão de inserir adv-->
             <tr id="advbtn">
               <td></td>
@@ -102,7 +96,6 @@
               </td>
             </tr>
           <!--fim tr botoes adv-->
-          <tr><td>//////////////////////</td><td>Advogados acabam aqui////////////////</td></tr>
           <tr>
             <td><label for="estado1">Estado:</label></td>
             <td><select name="estado1" id="estado1">
@@ -155,38 +148,17 @@
           <tr>
             <td><label for="recurso">Tipo de decisão:</label></td>
             <td><select name="recurso" id="recurso">
-                <option value="branco"></option>
-                <option value="acordao">Acórdão</option>
-                <option value="interlocutoria">Descisão Interlocutória</option>
-                <option value="despacho">Despacho</option>
-                <option value="sentenca">Sentença</option>
+              {loop="$tipo_decisao"}
+                <option value="{$value.tp_value}">{$value.tp_desc}</option>
+              {/loop}
               </select></td>
           </tr>
           <tr>
             <td><label for="tipo_peca">Peça a produzir:</label></td>
             <td><select name="recurso" id="recurso">
-                <option value="branco"></option>
-                <option value="instrumento">Agravo de Instrumento</option>
-                <option value="interno">Agravo Interno</option>
-                <option value="infringentes">Agravo em Recurso Especial</option>
-                <option value="infringentes">Agravo em Recurso Extraordinário</option>
-                <option value="regimental">Agravo Regimental</option>
-                <option value="apelacao">Apelação</option>
-                <option value="carta">Carta Testemunhável</option>
-                <option value="declaratorios">Embargos declaratórios</option>
-                <option value="divergencia">Embargos de divergência</option>
-                <option value="infringentes">Embargos infringentes</option>
-                <option value="corpus">Habeas Corpus</option>
-                <option value="data">Habeas Data</option>
-                <option value="seguranca">Mandado de Segurança</option>
-                <option value="manifestacao">Manifestação</option>
-                <option value="rec_adm">Recurso administrativo</option>
-                <option value="estrito">Recurso em Sentido Estrito</option>
-                <option value="rec_especial">Recurso Especial</option>
-                <option value="extraordinario">Recurso Extraordinário</option>
-                <option value="ordinario">Recurso Ordinário</option>
-                <option value="revisao">Revisão Criminal</option>
-                <option value="revista">Recurso de Revista</option>
+              {loop="$peca_produzir"}  
+              <option value="{$value.pec_value}">{$value.pec_desc}</option>
+              {/loop}  
               </select></td>
           <tr>
             <td><label for="inicio_prazo">Início do Prazo:</label></td>
