@@ -7,19 +7,21 @@ use \IADireito\Model;
 
 class Summons extends Model {
 
+    const SESSION = "Summons";
+
     public static function getSummons() {
 
         $sql = new Sql();
 
         //query apenas para testes, comando a ser substituido por PROCEDURE
-        $results = $sql->select("SELECT pub_numero_processo, pub_conteudo FROM tb_pub 
+        $results = $sql->select("SELECT pub_id, pub_numero_processo, pub_conteudo FROM tb_pub 
             WHERE pub_id = 526934655");
 
         return $results[0];
     }
 
-    public function setSummons() {
-
+    public function setSummons() 
+    {
         try {
             $this->setData(Summons::getSummons());
         } catch (\Exception $e) {
@@ -27,6 +29,7 @@ class Summons extends Model {
         }
     }
 
+    //METODO A DESENVOLVER
     public function saveSummons() 
     {
         $sql = new Sql();
@@ -36,6 +39,31 @@ class Summons extends Model {
         //    :ESTRUTURA, :N_CNJ,  )");
 
         return true;
+    }
+
+    public function setToSession() 
+    {
+        $_SESSION[Summons::SESSION] = $this->getValues();
+    }
+
+    public static function getFromSession() 
+    {
+        $summons = new Summons();
+
+        if (isset($_SESSION[Summons::SESSION]) 
+            && 
+            (int)$_SESSION[Summons::SESSION]['pub_id'] > 0) 
+        {
+            $summons->get((int)$_SESSION[Summons::SESSION]['pub_id']);
+        }
+        else 
+        {
+            $summons = Summons::getSummons();
+
+            $summon->setToSession();
+        }
+
+        return $summons;
     }
     
 
