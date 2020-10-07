@@ -17,6 +17,7 @@ $app->get('/', function()
     $summons = new Summons();
 
     $summons->setSummons();
+
     $summons->setToSession();
 
     $page = new Page();
@@ -33,7 +34,7 @@ $app->get('/', function()
     ));
 });
 
-/*NECESSITA DE AJUSTES
+//*NECESSITA DE AJUSTES
 $app->post('/submit-summons', function () {
     echo "publicacao classificada!";
 
@@ -41,9 +42,11 @@ $app->post('/submit-summons', function () {
     $summons->setData($_POST);
     $status = $summons->saveSummons($_POST);
 
+    var_dump($summons);
     //definir msg erro
 });
 
+/*
 $app->get('/resultado-inclusao', function ($message){
 
     //retornar msg erro
