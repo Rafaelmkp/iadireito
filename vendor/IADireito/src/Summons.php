@@ -14,10 +14,19 @@ class Summons extends Model {
         $sql = new Sql();
 
         //query apenas para testes, comando a ser substituido por PROCEDURE
-        $results = $sql->select("SELECT pub_id, pub_numero_processo, pub_conteudo FROM tb_pub 
-            WHERE pub_id = 526934655");
+        $results = $sql->select("SELECT 
+            pub_id, pub_numero_processo, pub_conteudo 
+            FROM tb_pub 
+            WHERE pub_id = 526934655"
+        );
 
-        return $results[0];
+        //criando chaves independentes dos nomes usados no DB
+        $data = [];
+        $data["id"] = $results[0]["pub_id"];
+        $data["num_proc"] = $results[0]["pub_numero_processo"];
+        $data["conteudo"] = $results[0]["pub_conteudo"];
+
+        return $data;
     }
 
     public function setSummons() 
