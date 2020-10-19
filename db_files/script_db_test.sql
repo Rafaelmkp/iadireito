@@ -32,67 +32,7 @@ CREATE TABLE processos.publicacao_unirriter (
 	pub_cnj_revisado bool NULL,
 	CONSTRAINT pk_publicacao_unirriter PRIMARY KEY (pub_id)
 );
---table controle classificacao
-create table processos.controle (
-	controle_id bigserial not null,
-	pub_n_classif_id bigint not null,
-	leitura boolean default false,
-	classificado boolean default false,
-	constraint pk_controle primary key (controle_id),
-	constraint fk_pub_n_classif 
-		foreign key (pub_n_classif_id) 
-			references processos.publicacao_unirriter(pub_id)
-)
---table advogado
-create table processos.advogado (
-	adv_id serial not null,
-	adv_nome varchar(64)not null,
-	adv_oab varchar(32)null,
-	adv_estado char(2)null,
-	constraint pk_advogado primary key(adv_id)
-);
---table publicacao advogado nxm
-create table processos.publicacao_advogado (
-	pub_adv_id bigserial not null,
-	adv_id serial not null,
-	pub_clas_id bigserial not null,
-	constraint pk_publicacao_advogado primary key(pub_adv_id),
-	constraint fk_advogado 
-		foreign key(adv_id) 
-			references processos.advogado(adv_id),
-	constraint fk_publicacoes_classificadas 
-		foreign key(pub_clas_id) 
-			references processos.publicacoes_classificadas(pub_clas_id)
-);
---table natureza processual
-create table processos.natureza_processual (
-	nat_id serial not null,
-	nat_descricao varchar(32) not null,
-	constraint pk_natureza_processual primary key(nat_id)
-);
---table tipo de decisao
-create table processos.decisao_tipo (
-	dec_id serial not null,
-	dec_descricao varchar(32) not null,
-	constraint pk_decisao_tipo primary key(dec_id)
-);
---table peca a produzir
-create table processos.peca_produzir (
-	pec_id serial not null,
-	pec_descricao varchar(32) not null,
-	constraint pk_peca_produzir primary key(pec_id)
-);
---table partes autor ou reu
-create table processos.partes (
-	partes_id bigserial not null,
-	nome varchar(32) not null,
-	parte varchar(32) not null,
-	pub_clas_id bigserial not null,
-	constraint pk_partes primary key(partes_id),
-	constraint fk_publicacoes_classificadas 
-		foreign key(pub_clas_id) 
-			references processos.publicacoes_classificadas(pub_clas_id)
-);
+
 --table publicacoes classificadas
 create table processos.publicacoes_classificadas (
 	pub_clas_id bigserial not null,
@@ -114,6 +54,75 @@ create table processos.publicacoes_classificadas (
 	ha_custas boolean,
 	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
 );
+
+--table controle classificacao
+create table processos.controle (
+	controle_id bigserial not null,
+	pub_n_classif_id bigint not null,
+	leitura boolean default false,
+	classificado boolean default false,
+	constraint pk_controle primary key (controle_id),
+	constraint fk_pub_n_classif 
+		foreign key (pub_n_classif_id) 
+			references processos.publicacao_unirriter(pub_id)
+);
+
+--table advogado
+create table processos.advogado (
+	adv_id serial not null,
+	adv_nome varchar(64)not null,
+	adv_oab varchar(32)null,
+	adv_estado char(2)null,
+	constraint pk_advogado primary key(adv_id)
+);
+
+--table publicacao advogado nxm
+create table processos.publicacao_advogado (
+	pub_adv_id bigserial not null,
+	adv_id serial not null,
+	pub_clas_id bigserial not null,
+	constraint pk_publicacao_advogado primary key(pub_adv_id),
+	constraint fk_advogado 
+		foreign key(adv_id) 
+			references processos.advogado(adv_id),
+	constraint fk_publicacoes_classificadas 
+		foreign key(pub_clas_id) 
+			references processos.publicacoes_classificadas(pub_clas_id)
+);
+
+--table natureza processual
+create table processos.natureza_processual (
+	nat_id serial not null,
+	nat_descricao varchar(32) not null,
+	constraint pk_natureza_processual primary key(nat_id)
+);
+
+--table tipo de decisao
+create table processos.decisao_tipo (
+	dec_id serial not null,
+	dec_descricao varchar(32) not null,
+	constraint pk_decisao_tipo primary key(dec_id)
+);
+
+--table peca a produzir
+create table processos.peca_produzir (
+	pec_id serial not null,
+	pec_descricao varchar(32) not null,
+	constraint pk_peca_produzir primary key(pec_id)
+);
+
+--table partes autor ou reu
+create table processos.partes (
+	partes_id bigserial not null,
+	nome varchar(32) not null,
+	parte varchar(32) not null,
+	pub_clas_id bigserial not null,
+	constraint pk_partes primary key(partes_id),
+	constraint fk_publicacoes_classificadas 
+		foreign key(pub_clas_id) 
+			references processos.publicacoes_classificadas(pub_clas_id)
+);
+
 
 insert into natureza 
 values (default,'branco' ,''),
