@@ -48,12 +48,12 @@ create table processos.publicacoes_classificadas (
 	peca_produzir varchar(32),
 	inicio_prazo date,
 	prazo int,
-	dias_corridos boolean,
 	dias_uteis boolean,
 	fim_prazo date,
 	ha_custas boolean,
 	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
 );
+
 
 --table controle classificacao
 create table processos.controle (
@@ -127,7 +127,6 @@ create table processos.partes (
 
 --procedure salva pub_classif
 	--salvar publicacao
-
 create procedure salva_pub_class(estrutura IN varchar(32),
 								 numero_cnj IN int8,
 								 numero_processo IN varchar(32),
@@ -140,7 +139,6 @@ create procedure salva_pub_class(estrutura IN varchar(32),
 								 peca_produzir IN varchar(32),
 								 inicio_prazo IN date,
 								 prazo IN int,
-								 dias_corridos IN boolean,
 								 dias_uteis IN boolean,
 								 fim_prazo IN date,
 								 ha_custas IN boolean,
@@ -161,7 +159,6 @@ begin
 													peca_produzir,
 								 					inicio_prazo,
 								 					prazo,
-								 					dias_corridos,
 								 					dias_uteis,
 								 					fim_prazo,
 								 					ha_custas
@@ -178,13 +175,12 @@ begin
 			peca_produzir,
 			inicio_prazo,
 			prazo,
-			dias_corridos,
 			dias_uteis,
 			fim_prazo,
 			ha_custas
 		   );
    
-	update table processos.contole
+	update processos.contole
 	set leitura = false,
 		classificado = true,
 	where ------
