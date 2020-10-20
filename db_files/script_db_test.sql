@@ -123,8 +123,76 @@ create table processos.partes (
 			references processos.publicacoes_classificadas(pub_clas_id)
 );
 
+drop procedure save_pub_teste;
+
+--procedure para teste
+create procedure save_pub_teste(estrutura IN varchar(32),
+								 numero_cnj IN int8,
+								 numero_processo IN varchar(32),
+								 natureza_processual IN varchar(32),
+								 vara IN varchar(32),
+								 estado IN char(2),
+								 comarca IN varchar(32),
+								 juiz IN varchar(32),
+								 decisao_tipo IN varchar(32),
+								 peca_produzir IN varchar(32),
+								 inicio_prazo IN date,
+								 prazo IN int,
+								 dias_uteis IN boolean,
+								 fim_prazo IN date,
+								 ha_custas IN boolean,
+								 vclass_id INOUT bigint
+								)
+LANGUAGE plpgsql
+as $$
+begin
+	
+	insert into processos.publicacoes_classificadas(estrutura,
+								 					numero_cnj,
+								 					numero_processo,
+								 					natureza_processual,
+								 					vara,
+								 					estado,
+								 					comarca,
+								 					juiz,
+								 					decisao_tipo,
+													peca_produzir,
+								 					inicio_prazo,
+								 					prazo,
+								 					dias_uteis,
+								 					fim_prazo,
+								 					ha_custas
+												   )
+	values (estrutura,
+			numero_cnj,
+			numero_processo,
+			natureza_processual,
+			vara,
+			estado,
+			comarca,
+			juiz,
+			decisao_tipo,
+			peca_produzir,
+			inicio_prazo,
+			prazo,
+			dias_uteis,
+			fim_prazo,
+			ha_custas
+		   );
+	
+	select pub_clas_id into vclass_id
+	from processos.publicacoes_classsificadas
+	where pub_clas_id = currval('pub_clas_id_pub_seq');
 
 
+	select pub_clas_id, numero_processo from processos.publicacoes_classificadas
+	where pub_clas_id = vclass_id;
+	commit;
+end; $$
+
+
+
+--procedure definitiva
 --procedure salva pub_classif
 	--salvar publicacao
 create procedure salva_pub_class(estrutura IN varchar(32),

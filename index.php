@@ -35,14 +35,14 @@ $app->get('/', function()
 });
 
 //*NECESSITA DE AJUSTES
+//momentaneamente usado pra testes
 $app->post('/submit-summons', function () {
     echo "publicacao classificada!";
 
     $summons = new Summons();
     $summons->setData($_POST);
-    $status = $summons->saveSummons($_POST);
-
-    var_dump($summons);
+    
+    var_dump(Summons::procTest());
     //definir msg erro
 });
 

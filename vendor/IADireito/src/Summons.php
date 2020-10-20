@@ -76,6 +76,31 @@ class Summons extends Model {
     }
     
 
-}
+    public static function procTest() {
+        $sql = new Sql();
 
+        $results = $sql->select("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
+            :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
+            :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS)",
+            [
+                ':ESTRUT'=> "processual", 
+                ':NUM_CNJ'=> "123456", 
+                ':NUM_PROC'=> "abc123", 
+                ':NAT_PROC'=> "adm", 
+                ':VARA'=> "3",
+                ':ESTADO'=> "rs", 
+                ':COMARCA'=> "noia",
+                ':JUIZ'=>"",
+                ':DEC_TIPO'=>"",
+                ':PECA_PROD'=>"",
+                ':INC_PRAZO'=>"",
+                ':PRAZO'=>"",
+                ':UTEIS'=>"",
+                ':FIM_PRAZO'=>"",
+                ':CUSTAS'=>""
+        ]);
+
+        return $results;
+    }
+}
 ?>
