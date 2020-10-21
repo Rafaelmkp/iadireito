@@ -1,12 +1,14 @@
-insert into natureza 
-values (default,'branco' ,''),
-       (default,'administrativa' ,'Administrativa'),
-       (default, 'bancaria','Bancária'),
-       (default, 'civil', 'Civil'),
-       (default, 'empresarial', 'Empresarial'),
-       (default, 'familia', 'Família'),
-       (default, 'penal', 'Penal'),
-       (default, 'trabalhista', 'Trabalhista');
+set schema 'processos';
+
+insert into processos.natureza_processual 
+values (default,' '),
+       (default, 'Administrativa'),
+       (default, 'Bancária'),
+       (default, 'Civil'),
+       (default, 'Empresarial'),
+       (default, 'Família'),
+       (default, 'Penal'),
+       (default, 'Trabalhista');
       
 insert into tipo_decisao 
 values (default, 'branco', ''),

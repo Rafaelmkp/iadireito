@@ -7,7 +7,7 @@ class Sql {
 	const HOSTNAME = "127.0.0.1";
 	const USERNAME = "postgres";
 	const PASSWORD = "admin";
-	const DBNAME = "IADireito";
+	const DBNAME = "processos";
 
 	private $conn;
 
@@ -22,6 +22,7 @@ class Sql {
 
 	}
 
+	//uso generico
 	private function setParams($statement, $parameters = array())
 	{
 
@@ -33,10 +34,31 @@ class Sql {
 
 	}
 
+	//uso para procedures com retorno
+	private function setParameters($statement, $parameters = array(), $length)
+	{
+
+		foreach ($parameters as $key => $value) {
+			
+			$this->bindParameters($statement, $key, $value, $length);
+
+		}
+
+	}
+
+	//uso generico
 	private function bindParam($statement, $key, $value)
 	{
 
 		$statement->bindParam($key, $value);
+
+	}
+
+	//uso para procedures com retorno
+	private function bindParameters($statement, $key, $value, $length)
+	{
+
+		$statement->bindParam($key, $value, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, $length);
 
 	}
 
@@ -62,6 +84,17 @@ class Sql {
 
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+	}
+
+	public function outputProcedure($rawQuery, $params = array())
+	{
+		$stmt = $this->conn->prepare($rawQuery);
+
+		$this->setParameters($stmt, $params, 12);
+
+		$stmt-> execute();
+
+		return $stmt;
 	}
 
 }

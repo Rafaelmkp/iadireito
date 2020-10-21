@@ -28,7 +28,7 @@ $app->get('/', function()
 
     $page->setTpl("formulario", array(
         "summons"=>$summons->getValues(),
-        "tipo_decisao"=>$tipo_decisao,
+        "decisao_tipo"=>$tipo_decisao,
         "peca_produzir" => $peca_produzir,
         "natureza"=> $natureza
     ));

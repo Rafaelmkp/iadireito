@@ -58,7 +58,9 @@
           <label for="natureza">Natureza:</label>
           <select name="natureza" id="natureza">
             {loop="$natureza"}
-            <option value="{$value.nat_value}">{$value.nat_desc}</option>
+            <option value="{$value.nat_descricao}">
+              {$value.nat_descricao}
+            </option>
             {/loop}
           </select>
           <br /><br />
@@ -210,15 +212,19 @@
 
           <label for="recurso">Tipo de decisão:</label>
           <select name="recurso" id="recurso">
-            {loop="$tipo_decisao"}
-            <option value="{$value.tp_value}">{$value.tp_desc}</option>
+            {loop="$decisao_tipo"}
+            <option value="{$value.dec_descricao}">
+              {$value.dec_descricao}
+            </option>
             {/loop}
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
           <select name="recurso" id="recurso">
             {loop="$peca_produzir"}
-            <option value="{$value.pec_value}">{$value.pec_desc}</option>
+            <option value="{$value.pec_descricao}">
+              {$value.pec_descricao}
+            </option>
             {/loop}
           </select>
           <br /><br />

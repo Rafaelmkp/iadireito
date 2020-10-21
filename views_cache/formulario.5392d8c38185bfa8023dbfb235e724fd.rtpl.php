@@ -58,7 +58,9 @@
           <label for="natureza">Natureza:</label>
           <select name="natureza" id="natureza">
             <?php $counter1=-1;  if( isset($natureza) && ( is_array($natureza) || $natureza instanceof Traversable ) && sizeof($natureza) ) foreach( $natureza as $key1 => $value1 ){ $counter1++; ?>
-            <option value="<?php echo htmlspecialchars( $value1["nat_value"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nat_desc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+            <option value="<?php echo htmlspecialchars( $value1["nat_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["nat_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
             <?php } ?>
           </select>
           <br /><br />
@@ -210,15 +212,19 @@
 
           <label for="recurso">Tipo de decisão:</label>
           <select name="recurso" id="recurso">
-            <?php $counter1=-1;  if( isset($tipo_decisao) && ( is_array($tipo_decisao) || $tipo_decisao instanceof Traversable ) && sizeof($tipo_decisao) ) foreach( $tipo_decisao as $key1 => $value1 ){ $counter1++; ?>
-            <option value="<?php echo htmlspecialchars( $value1["tp_value"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["tp_desc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+            <?php $counter1=-1;  if( isset($decisao_tipo) && ( is_array($decisao_tipo) || $decisao_tipo instanceof Traversable ) && sizeof($decisao_tipo) ) foreach( $decisao_tipo as $key1 => $value1 ){ $counter1++; ?>
+            <option value="<?php echo htmlspecialchars( $value1["dec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["dec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
             <?php } ?>
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
           <select name="recurso" id="recurso">
             <?php $counter1=-1;  if( isset($peca_produzir) && ( is_array($peca_produzir) || $peca_produzir instanceof Traversable ) && sizeof($peca_produzir) ) foreach( $peca_produzir as $key1 => $value1 ){ $counter1++; ?>
-            <option value="<?php echo htmlspecialchars( $value1["pec_value"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["pec_desc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+            <option value="<?php echo htmlspecialchars( $value1["pec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["pec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
             <?php } ?>
           </select>
           <br /><br />

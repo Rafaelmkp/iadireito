@@ -10,21 +10,21 @@ class htmlOptions extends Model {
     {        
         $sql = new Sql();
 
-        return $sql->select("SELECT tp_value, tp_desc FROM tipo_decisao");
+        return $sql->select("SELECT dec_descricao FROM processos.decisao_tipo");
     }
     
     public static function getPecaProduzirFromDB () 
     {        
         $sql = new Sql();
 
-        return $sql->select("SELECT pec_value, pec_desc FROM peca_produzir");
+        return $sql->select("SELECT pec_descricao FROM processos.peca_produzir");
     }
 
     public static function getNaturezaFromDB () 
     {        
         $sql = new Sql();
 
-        return $sql->select("SELECT nat_value, nat_desc FROM natureza");
+        return $sql->select("SELECT nat_descricao FROM processos.natureza_processual");
     }
 }
 ?>

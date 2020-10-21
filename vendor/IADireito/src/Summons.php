@@ -16,7 +16,7 @@ class Summons extends Model {
         //query apenas para testes, comando a ser substituido por PROCEDURE
         $results = $sql->select("SELECT 
             pub_id, pub_numero_processo, pub_conteudo 
-            FROM tb_pub 
+            FROM processos.publicacao_uniritter 
             WHERE pub_id = 526934655"
         );
 
@@ -79,7 +79,7 @@ class Summons extends Model {
     public static function procTest() {
         $sql = new Sql();
 
-        $results = $sql->select("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
+        $results = $sql->outputProcedure("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
             :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
             :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS)",
             [
