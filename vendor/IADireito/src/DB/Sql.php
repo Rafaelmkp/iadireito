@@ -58,7 +58,7 @@ class Sql {
 	private function bindParameters($statement, $key, $value, $length)
 	{
 
-		$statement->bindParam($key, $value, \PDO::PARAM_STR|\PDO::PARAM_INPUT_OUTPUT, $length);
+		$statement->bindParam($key, $value, \PDO::PARAM_INT|\PDO::PARAM_INPUT_OUTPUT, $length);
 
 	}
 
@@ -92,9 +92,9 @@ class Sql {
 
 		$this->setParameters($stmt, $params, 12);
 
-		$stmt-> execute();
+		 $stmt->execute();
 
-		return $stmt;
+		return $stmt->fetchAll();
 	}
 
 }

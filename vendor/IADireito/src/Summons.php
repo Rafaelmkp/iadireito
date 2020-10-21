@@ -79,25 +79,29 @@ class Summons extends Model {
     public static function procTest() {
         $sql = new Sql();
 
-        $results = $sql->select("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
+        $return = 0;
+
+        $results = $sql->outputProcedure("CALL processos.salva_pub_class(:CONTEUDO, :ESTRUT, :NUM_CNJ, :NUM_PROC, 
             :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
-            :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS)",
+            :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS, :RETURN)",
             [
+                ':CONTEUDO'=>"conteudo",
                 ':ESTRUT'=> "processual", 
-                ':NUM_CNJ'=> "123456", 
+                ':NUM_CNJ'=> 1234, 
                 ':NUM_PROC'=> "abc123", 
                 ':NAT_PROC'=> "adm", 
                 ':VARA'=> "3",
                 ':ESTADO'=> "rs", 
                 ':COMARCA'=> "noia",
-                ':JUIZ'=>"",
-                ':DEC_TIPO'=>"",
-                ':PECA_PROD'=>"",
-                ':INC_PRAZO'=>"",
-                ':PRAZO'=>"",
-                ':UTEIS'=>"",
-                ':FIM_PRAZO'=>"",
-                ':CUSTAS'=>""
+                ':JUIZ'=>"juiz",
+                ':DEC_TIPO'=>"decisao",
+                ':PECA_PROD'=>"2020-10-10",
+                ':INC_PRAZO'=>NULL,
+                ':PRAZO'=>10,
+                ':UTEIS'=>true,
+                ':FIM_PRAZO'=>NULL,
+                ':CUSTAS'=>true,
+                ':RETURN'=>$return
         ]);
 
         return $results;

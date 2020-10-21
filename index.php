@@ -1,5 +1,5 @@
 <?php
-
+use \IADireito\DB\Sql;
 session_start();
 require_once("vendor/autoload.php");
 
@@ -36,12 +36,12 @@ $app->get('/', function()
 
 //*NECESSITA DE AJUSTES
 //momentaneamente usado pra testes
-$app->post('/submit-summons', function () {
+$app->get('/submit-summons', function () {
     echo "publicacao classificada!";
 
     $summons = new Summons();
     // $summons->setData($_POST);
-    
+
     var_dump(Summons::procTest());
     //definir msg erro
 });

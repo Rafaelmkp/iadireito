@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <form action="/submit-summons" method="post" autocomplete="off">
+    <form action="/submit-summons" method="get" autocomplete="off">
       <h1 align="center">Dados Processuais</h1>
       <br />
       <div class="parent">

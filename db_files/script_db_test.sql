@@ -57,16 +57,23 @@ create table processos.publicacoes_classificadas (
 );
 
 
+
 --table controle classificacao
 create table processos.controle (
 	controle_id bigserial not null,
-	pub_n_classif_id bigint not null,
+	pub_n_classif_id bigint not null unique,
+	pub_clasificada_id bigint not null,
+	
 	leitura boolean default false,
 	classificado boolean default false,
 	constraint pk_controle primary key (controle_id),
 	constraint fk_pub_n_classif 
 		foreign key (pub_n_classif_id) 
 			references processos.publicacao_uniritter(pub_id)
+);
+
+processos.leitura (
+
 );
 
 --table advogado
@@ -190,26 +197,26 @@ begin
 	commit;
 end; $$
 
---teste call procedure 
+--teste call procedure 	
 call salva_pub_class(
-				'conteudo'::character varying,
-				'abc'::character varying,  
+				'conteudo',
+				'abc',  
 				123, 
-				'123br'::character varying,
-				'natureza'::character varying,
-				'vara'::character varying,
-				'rs'::character, 
-				'comarca'::character varying, 
-				'juiz'::character varying, 
-				'decisao'::character varying, 
-				'peca'::character varying,
-				'2020-10-10'::date, 
+				'123br',
+				'natureza',
+				'vara' ,
+				'rs', 
+				'comarca', 
+				'juiz', 
+				'decisao', 
+				'peca',
+				'2020-10-10', 
 				12, 
 				true, 
-				NULL::date, 
+				NULL, 
 				true,
 				0);
 			
-=
+
 			
 				
