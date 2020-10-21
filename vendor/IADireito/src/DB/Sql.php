@@ -58,7 +58,7 @@ class Sql {
 	private function bindParameters($statement, $key, $value, $length)
 	{
 
-		$statement->bindParam($key, $value, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, $length);
+		$statement->bindParam($key, $value, \PDO::PARAM_STR|\PDO::PARAM_INPUT_OUTPUT, $length);
 
 	}
 

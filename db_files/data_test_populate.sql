@@ -10,39 +10,39 @@ values (default,' '),
        (default, 'Penal'),
        (default, 'Trabalhista');
       
-insert into tipo_decisao 
-values (default, 'branco', ''),
-       (default, 'acordao', 'Acórdão'),
-       (default, 'interlocutoria', 'Descisão Interlocutória'),
-       (default, 'despacho', 'Despacho'),
-       (default, 'sentenca', 'Sentença');
+insert into processos.decisao_tipo 
+values (default, ''),
+       (default, 'Acórdão'),
+       (default, 'Descisão Interlocutória'),
+       (default, 'Despacho'),
+       (default, 'Sentença');
       
 insert into peca_produzir
-values (default, 'branco', ''),
-       (default, 'instrumento', 'Agravo de Instrumento'),
-       (default, 'interno', 'Agravo Interno'),
-       (default, 'agv_rec_especial', 'Agravo em Recurso Especial'),
-       (default, 'agv_rec_extraordinario', 'Agravo em Recurso Extraordinário'),
-       (default, 'regimental', 'Agravo Regimental'),
-       (default, 'apelacao', 'Apelação'),
-       (default, 'carta', 'Carta Testemunhável'),
-       (default, 'declaratorios', 'Embargos declaratórios'),
-       (default, 'divergencia', 'Embargos de divergência'),
-       (default, 'infringentes', 'Embargos infringentes'),
-       (default, 'corpus', 'Habeas Corpus'),
-       (default, 'data', 'Habeas Data'),
-       (default, 'seguranca', 'Mandado de Segurança'),
-       (default, 'manifestacao', 'Manifestação'),
-       (default, 'rec_adm', 'Recurso administrativo'),
-       (default, 'estrito', 'Recurso em Sentido Estrito'),
-       (default, 'rec_especial', 'Recurso Especial'),
-       (default, 'extraordinario', 'Recurso Extraordinário'),
-       (default, 'ordinario', 'Recurso Ordinário'),
-       (default, 'revisao', 'Revisão Criminal'),
-       (default, 'revista', 'Recurso de Revista');
+values (default, ''),
+       (default, 'Agravo de Instrumento'),
+       (default, 'Agravo Interno'),
+       (default, 'Agravo em Recurso Especial'),
+       (default, 'Agravo em Recurso Extraordinário'),
+       (default, 'Agravo Regimental'),
+       (default, 'Apelação'),
+       (default, 'Carta Testemunhável'),
+       (default, 'Embargos declaratórios'),
+       (default, 'Embargos de divergência'),
+       (default, 'Embargos infringentes'),
+       (default, 'Habeas Corpus'),
+       (default, 'Habeas Data'),
+       (default, 'Mandado de Segurança'),
+       (default, 'Manifestação'),
+       (default, 'Recurso administrativo'),
+       (default, 'Recurso em Sentido Estrito'),
+       (default, 'Recurso Especial'),
+       (default, 'Recurso Extraordinário'),
+       (default, 'Recurso Ordinário'),
+       (default, 'Revisão Criminal'),
+       (default, 'Recurso de Revista');
 
-insert into tb_pub 
-values (526934655,	10146860,	'VERDADEIRO',	0011036352020826010000000000000000,
+insert into processos.publicacao_uniritter 
+values (526934655,	10146860,	true,	0011036352020826010000000000000000,
 '{"ano": 2020, "digito": 35, "origem": 100, "justica": 8, "tribunal": 26, "sequencia": 11036}',
 586,'', 978655, 3063, '2020-06-16' , 53, '', NULL, '', '',	'471BB7C520CD15F3F0F823F92B65E5BD57B32696A1E022502ECA881F1D78D744',
 'Fóruns Centrais

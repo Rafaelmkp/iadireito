@@ -79,7 +79,7 @@ class Summons extends Model {
     public static function procTest() {
         $sql = new Sql();
 
-        $results = $sql->outputProcedure("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
+        $results = $sql->select("CALL save_pub_teste(:ESTRUT, :NUM_CNJ, :NUM_PROC, 
             :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
             :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS)",
             [

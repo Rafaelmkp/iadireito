@@ -33,9 +33,11 @@ CREATE TABLE processos.publicacao_uniritter (
 	CONSTRAINT pk_publicacao_unirriter PRIMARY KEY (pub_id)
 );
 
+
 --table publicacoes classificadas
 create table processos.publicacoes_classificadas (
 	pub_clas_id bigserial not null,
+	conteudo varchar,
 	estrutura varchar(32),
 	numero_cnj int8,
 	numero_processo varchar(32),
@@ -53,6 +55,7 @@ create table processos.publicacoes_classificadas (
 	ha_custas boolean,
 	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
 );
+
 
 --table controle classificacao
 create table processos.controle (
@@ -122,114 +125,50 @@ create table processos.partes (
 			references processos.publicacoes_classificadas(pub_clas_id)
 );
 
-drop procedure save_pub_teste;
 
---procedure para teste
-create procedure save_pub_teste(estrutura IN varchar(32),
-								 numero_cnj IN int8,
-								 numero_processo IN varchar(32),
-								 natureza_processual IN varchar(32),
-								 vara IN varchar(32),
-								 estado IN char(2),
-								 comarca IN varchar(32),
-								 juiz IN varchar(32),
-								 decisao_tipo IN varchar(32),
-								 peca_produzir IN varchar(32),
-								 inicio_prazo IN date,
-								 prazo IN int,
-								 dias_uteis IN boolean,
-								 fim_prazo IN date,
-								 ha_custas IN boolean,
-								 vclass_id INOUT bigint
-								)
-LANGUAGE plpgsql
-as $$
-begin
-	
-	insert into processos.publicacoes_classificadas(estrutura,
-								 					numero_cnj,
-								 					numero_processo,
-								 					natureza_processual,
-								 					vara,
-								 					estado,
-								 					comarca,
-								 					juiz,
-								 					decisao_tipo,
-													peca_produzir,
-								 					inicio_prazo,
-								 					prazo,
-								 					dias_uteis,
-								 					fim_prazo,
-								 					ha_custas
-												   )
-	values (estrutura,
-			numero_cnj,
-			numero_processo,
-			natureza_processual,
-			vara,
-			estado,
-			comarca,
-			juiz,
-			decisao_tipo,
-			peca_produzir,
-			inicio_prazo,
-			prazo,
-			dias_uteis,
-			fim_prazo,
-			ha_custas
-		   );
-	
-	select pub_clas_id into vclass_id
-	from processos.publicacoes_classsificadas
-	where pub_clas_id = currval('pub_clas_id_pub_seq');
-
-
-	select pub_clas_id, numero_processo from processos.publicacoes_classificadas
-	where pub_clas_id = vclass_id;
-	commit;
-end; $$
-
-
+drop procedure if exists processos.salva_pub_class;
 
 --procedure definitiva
 --procedure salva pub_classif
-	--salvar publicacao
-create procedure salva_pub_class(estrutura IN varchar(32),
-								 numero_cnj IN int8,
-								 numero_processo IN varchar(32),
-								 natureza_processual IN varchar(32),
-								 vara IN varchar(32),
-								 estado IN char(2),
-								 comarca IN varchar(32),
-								 juiz IN varchar(32),
-								 decisao_tipo IN varchar(32),
-								 peca_produzir IN varchar(32),
-								 inicio_prazo IN date,
-								 prazo IN int,
-								 dias_uteis IN boolean,
-								 fim_prazo IN date,
-								 ha_custas IN boolean,
-								 IDreturn INOUT bigint
-								)
+create procedure salva_pub_class(
+		conteudo IN varchar,
+		estrutura IN varchar(32),
+		numero_cnj IN int,
+		numero_processo IN varchar(32),
+		natureza_processual IN varchar(32),
+		vara IN varchar(32),
+		estado IN char(2),
+		comarca IN varchar(32),
+		juiz IN varchar(32),
+		decisao_tipo IN varchar(32),
+		peca_produzir IN varchar(32),
+		inicio_prazo IN date,
+		prazo IN int,
+		dias_uteis IN boolean,
+		fim_prazo IN date,
+		ha_custas IN boolean,
+		IDreturn INOUT bigint
+		)
 language plpgsql
 as $$
 begin
-	insert into processos.publicacoes_classificadas(estrutura,
-								 					numero_cnj,
-								 					numero_processo,
-								 					natureza_processual,
-								 					vara,
-								 					estado,
-								 					comarca,
-								 					juiz,
-								 					decisao_tipo,
-													peca_produzir,
-								 					inicio_prazo,
-								 					prazo,
-								 					dias_uteis,
-								 					fim_prazo,
-								 					ha_custas
-												   )
+	insert into processos.publicacoes_classificadas(
+		estrutura,
+		numero_cnj,
+		numero_processo,
+		natureza_processual,
+		vara,
+		estado,
+		comarca,
+		juiz,
+		decisao_tipo,
+		peca_produzir,
+		inicio_prazo,
+		prazo,
+		dias_uteis,
+		fim_prazo,
+		ha_custas
+		)
 	values (estrutura,
 			numero_cnj,
 			numero_processo,
@@ -246,15 +185,31 @@ begin
 			fim_prazo,
 			ha_custas
 		   );
-   
-	update processos.contole
-	set leitura = false,
-		classificado = true,
-	where ------
-
-	select into IDreturn from currval('pub_clas_id_pub_seq');
+		  
+	select currval into IDreturn from currval(pg_get_serial_sequence('processos.publicacoes_classificadas', 'pub_clas_id'));
 	commit;
 end; $$
 
-
-
+--teste call procedure 
+call salva_pub_class(
+				'conteudo'::character varying,
+				'abc'::character varying,  
+				123, 
+				'123br'::character varying,
+				'natureza'::character varying,
+				'vara'::character varying,
+				'rs'::character, 
+				'comarca'::character varying, 
+				'juiz'::character varying, 
+				'decisao'::character varying, 
+				'peca'::character varying,
+				'2020-10-10'::date, 
+				12, 
+				true, 
+				NULL::date, 
+				true,
+				0);
+			
+=
+			
+				
