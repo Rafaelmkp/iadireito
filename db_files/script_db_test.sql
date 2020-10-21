@@ -5,7 +5,7 @@ create database processos;
 create schema processos;
 
 --table publicacao nao-classificadas
-CREATE TABLE processos.publicacao_unirriter (
+CREATE TABLE processos.publicacao_uniritter (
 	pub_id bigserial NOT NULL,
 	pub_cnj_id int8 NOT NULL DEFAULT 1,
 	pub_cnj bool NOT NULL DEFAULT false,
@@ -54,7 +54,6 @@ create table processos.publicacoes_classificadas (
 	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
 );
 
-
 --table controle classificacao
 create table processos.controle (
 	controle_id bigserial not null,
@@ -64,7 +63,7 @@ create table processos.controle (
 	constraint pk_controle primary key (controle_id),
 	constraint fk_pub_n_classif 
 		foreign key (pub_n_classif_id) 
-			references processos.publicacao_unirriter(pub_id)
+			references processos.publicacao_uniritter(pub_id)
 );
 
 --table advogado
