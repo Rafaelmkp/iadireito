@@ -81,10 +81,12 @@ class Summons extends Model {
 
         $return = 0;
 
-        $results = $sql->outputProcedure("CALL processos.salva_pub_class(:CONTEUDO, :ESTRUT, :NUM_CNJ, :NUM_PROC, 
+        $results = $sql->outputProcedure("CALL processos.salva_pub_class(
+            :OLD_ID ,:CONTEUDO, :ESTRUT, :NUM_CNJ, :NUM_PROC, 
             :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
             :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS, :RETURN)",
             [
+                ':OLD_ID'=>$this->getid(),
                 ':CONTEUDO'=>"conteudo",
                 ':ESTRUT'=> "processual", 
                 ':NUM_CNJ'=> 1234, 
@@ -104,7 +106,7 @@ class Summons extends Model {
                 ':RETURN'=>$return
         ]);
 
-        return $results;
+        return $results[0];
     }
 }
 ?>

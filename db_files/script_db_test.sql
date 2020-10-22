@@ -56,20 +56,20 @@ create table processos.publicacoes_classificadas (
 	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
 );
 
-
+drop table if exists processos.controle;
 
 --table controle classificacao
 create table processos.controle (
 	controle_id bigserial not null,
 	pub_n_classif_id bigint not null unique,
-	pub_clasificada_id bigint not null,
-	
-	leitura boolean default false,
-	classificado boolean default false,
+	pub_classificada_id bigint not null,
 	constraint pk_controle primary key (controle_id),
 	constraint fk_pub_n_classif 
 		foreign key (pub_n_classif_id) 
-			references processos.publicacao_uniritter(pub_id)
+			references processos.publicacao_uniritter(pub_id),
+	constraint fk_pub_classificada_id
+		foreign key (pub_classificada_id)
+			references processos.publicacoes_classificadas(pub_clas_id)
 );
 
 processos.leitura (
@@ -138,6 +138,7 @@ drop procedure if exists processos.salva_pub_class;
 --procedure definitiva
 --procedure salva pub_classif
 create procedure salva_pub_class(
+		pub_old_id in int,
 		conteudo IN varchar,
 		estrutura IN varchar(32),
 		numero_cnj IN int,
@@ -194,11 +195,50 @@ begin
 		   );
 		  
 	select currval into IDreturn from currval(pg_get_serial_sequence('processos.publicacoes_classificadas', 'pub_clas_id'));
+
+	insert into processos.controle
+	values(
+		default,
+		pub_old_id,
+		IDreturn
+		);
+	
 	commit;
 end; $$
 
---teste call procedure 	
+drop procedure salva_advogado; 
+
+create procedure salva_advogado(
+	adv_nome in varchar(64),
+	adv_oab in varchar(32),
+	adv_estado in char(2),
+	pub_id in int
+	)	
+	language plpgsql
+	as $$
+	begin
+		
+		insert into processos.advogado
+		values(
+			default,
+			adv_nome,
+			adv_oab,
+			adv_estado
+			);
+		
+		insert into processos.publicacao_advogado
+		values(
+			default,
+			currval(pg_get_serial_sequence('processos.advogado', 'adv_id')),
+			pub_id
+		);
+	
+		commit;
+	end $$
+
+--teste call procedure pub_class
 call salva_pub_class(
+				526934655,
 				'conteudo',
 				'abc',  
 				123, 
@@ -218,5 +258,11 @@ call salva_pub_class(
 				0);
 			
 
-			
+--teste call procedure adv
+call salva_advogado(
+		'dr fulano de tal',
+		'oab123',
+		'rs',
+		1);	
+	
 				

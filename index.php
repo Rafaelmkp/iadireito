@@ -1,5 +1,4 @@
 <?php
-use \IADireito\DB\Sql;
 session_start();
 require_once("vendor/autoload.php");
 
@@ -36,7 +35,7 @@ $app->get('/', function()
 
 //*NECESSITA DE AJUSTES
 //momentaneamente usado pra testes
-$app->get('/submit-summons', function () {
+$app->post('/submit-summons', function () {
     echo "publicacao classificada!";
 
     $summons = new Summons();
