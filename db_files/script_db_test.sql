@@ -133,6 +133,27 @@ create table processos.partes (
 );
 
 
+drop function processos.selec_pub_nao_classif;
+
+create function selec_pub_nao_classif() 
+	returns table(pub_id bigint, 
+				  pub_numero_processo varchar,
+				  pub_conteudo varchar)
+	as $$ 
+	begin
+		return query select (pu.pub_id::bigint, 
+				pu.pub_numero_processo::text,
+				pu.pub_conteudo::text)
+		from processos.publicacao_uniritter pu left join processos.controle c
+		on pu.pub_id = c.pub_n_classif_id
+		where c.pub_n_classif_id is null;
+	
+	end; $$
+language plpgsql;
+
+
+select * from selec_pub_nao_classif();
+		
 drop procedure if exists processos.salva_pub_class;
 
 --procedure definitiva
@@ -206,7 +227,7 @@ begin
 	commit;
 end; $$
 
-drop procedure salva_advogado; 
+drop procedure if exists salva_advogado; 
 
 create procedure salva_advogado(
 	adv_nome in varchar(64),

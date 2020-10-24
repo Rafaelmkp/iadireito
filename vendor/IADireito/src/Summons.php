@@ -13,11 +13,9 @@ class Summons extends Model {
 
         $sql = new Sql();
 
-        //query apenas para testes, comando a ser substituido por PROCEDURE
-        $results = $sql->select("SELECT 
-            pub_id, pub_numero_processo, pub_conteudo 
-            FROM processos.publicacao_uniritter 
-            WHERE pub_id = 526934655"
+        $results = $sql->select("SELECT * FROM processos.selec_pub_nao_classif() 
+            AS (pub_id BIGINT, pub_numero_processo CHARACTER VARYING, pub_conteudo TEXT)",
+            []
         );
 
         //criando chaves independentes dos nomes usados no DB
@@ -25,6 +23,7 @@ class Summons extends Model {
         $data["id"] = $results[0]["pub_id"];
         $data["num_proc"] = $results[0]["pub_numero_processo"];
         $data["conteudo"] = $results[0]["pub_conteudo"];
+        $data["conteudo"] = \str_replace("\n\r\n", "\n" ,$data["conteudo"]);
 
         return $data;
     }
@@ -76,7 +75,7 @@ class Summons extends Model {
     }
     
 
-    public static function procTest() {
+    public function procTest() {
         $sql = new Sql();
 
         $return = 0;
