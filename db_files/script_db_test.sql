@@ -33,47 +33,89 @@ CREATE TABLE processos.publicacao_uniritter (
 	CONSTRAINT pk_publicacao_unirriter PRIMARY KEY (pub_id)
 );
 
+--removendo colunas desnecesarias da tabela antiga
+alter table processos.publicacao_uniritter
+drop column if exists pub_cnj,
+drop column if exists advogado_mapeado,
+drop column if exists advogado_mapeado_erro,
+drop column if exists pub_cnj_revisado,
+drop column if exists pub_orgao,
+drop column if exists pub_vara,
+drop column if exists pub_cidade,
+drop column if exists pub_estado,
+drop column if exists pub_jor_id,
+drop column if exists pub_data_processado;
+
 
 --table publicacoes classificadas
 create table processos.publicacoes_classificadas (
 	pub_clas_id bigserial not null,
+	pub_id bigserial not null,
 	conteudo varchar,
 	estrutura varchar(32),
-	numero_cnj int8,
+	numero_cnj serial not null,
 	numero_processo varchar(32),
-	natureza_processual varchar(32),
+	natureza_processual serial not null,
 	vara varchar(32),
 	estado char(2),
 	comarca varchar(32),
 	juiz varchar(32),
-	decisao_tipo varchar(32),
-	peca_produzir varchar(32),
+	decisao_tipo serial not null,
+	peca_produzir serial not null,
 	inicio_prazo date,
 	prazo int,
 	dias_uteis boolean,
 	fim_prazo date,
 	ha_custas boolean,
-	constraint pk_publicacoes_classificadas primary key(pub_clas_id)
+	id_user serial not null,
+	id_user2 serial not null,
+	constraint pk_publicacoes_classificadas primary key(pub_clas_id),
+	constraint fk_publicacoes_nao_classificadas foreign key(pub_id)
+		references processos.publicacao_uniritter(pub_id),
+	constraint fk_numero_cnj foreign key(numero_cnj) 
+		references processos.cnj(cnj_id),
+	constraint fk_id_user foreign key(id_user) 
+		references processos.usuario(user_id),
+	constraint fk_id_user2 foreign key(id_user) 
+		references processos.usuario(user_id),
+	constraint fk_natureza_processual foreign key(natureza_processual) 
+		references processos.natureza_processual(nat_id),
+	constraint fk_decisao_tipo foreign key(decisao_tipo) 
+		references processos.decisao_tipo(dec_id),
+	constraint fk_peca_produzir foreign key(peca_produzir) 
+		references processos.peca_produzir(pec_id)
+);
+
+--removendo coluna conteudo da tabela nova
+alter table processos.publicacoes_classificadas
+drop column if exists conteudo;
+
+--table usuario / fk na tabela nova ok
+create table processos.usuario (
+	user_id serial not null,
+	user_login varchar not null,
+	user_password varchar not null,
+	constraint pk_user_id primary key(user_id)
+);
+
+--table cnj / fk na tabela nova ok
+create table processos.cnj (
+	cnj_id serial not null,
+	num_proc varchar not null,
+	num_cnj json not null,
+	constraint pk_cnj_id primary key (cnj_id)
 );
 
 drop table if exists processos.controle;
 
---table controle classificacao
-create table processos.controle (
-	controle_id bigserial not null,
-	pub_n_classif_id bigint not null unique,
-	pub_classificada_id bigint not null,
-	constraint pk_controle primary key (controle_id),
-	constraint fk_pub_n_classif 
-		foreign key (pub_n_classif_id) 
-			references processos.publicacao_uniritter(pub_id),
-	constraint fk_pub_classificada_id
-		foreign key (pub_classificada_id)
-			references processos.publicacoes_classificadas(pub_clas_id)
-);
-
-processos.leitura (
-
+--table publicacao leitura
+create table processos.publicacao_leitura (
+	lec_id bigserial not null,
+	pub_id bigserial not null,
+	lec_date timestamptz NULL DEFAULT now(),
+	constraint pk_lec_id primary key(lec_id),
+	constraint fk_pub_id foreign key(pub_id) 
+		references processos.publicacao_uniritter(pub_id)
 );
 
 --table advogado
@@ -91,29 +133,27 @@ create table processos.publicacao_advogado (
 	adv_id serial not null,
 	pub_clas_id bigserial not null,
 	constraint pk_publicacao_advogado primary key(pub_adv_id),
-	constraint fk_advogado 
-		foreign key(adv_id) 
-			references processos.advogado(adv_id),
-	constraint fk_publicacoes_classificadas 
-		foreign key(pub_clas_id) 
-			references processos.publicacoes_classificadas(pub_clas_id)
+	constraint fk_advogado foreign key(adv_id) 
+		references processos.advogado(adv_id),
+	constraint fk_publicacoes_classificadas foreign key(pub_clas_id) 
+		references processos.publicacoes_classificadas(pub_clas_id)
 );
 
---table natureza processual
+--table natureza processual / fk na tabela nova ok
 create table processos.natureza_processual (
 	nat_id serial not null,
 	nat_descricao varchar(32) not null,
 	constraint pk_natureza_processual primary key(nat_id)
 );
 
---table tipo de decisao
+--table tipo de decisao / fk na tabela nova ok
 create table processos.decisao_tipo (
 	dec_id serial not null,
 	dec_descricao varchar(32) not null,
 	constraint pk_decisao_tipo primary key(dec_id)
 );
 
---table peca a produzir
+--table peca a produzir / fk na tabela nova ok
 create table processos.peca_produzir (
 	pec_id serial not null,
 	pec_descricao varchar(32) not null,
@@ -127,15 +167,15 @@ create table processos.partes (
 	parte varchar(32) not null,
 	pub_clas_id bigserial not null,
 	constraint pk_partes primary key(partes_id),
-	constraint fk_publicacoes_classificadas 
-		foreign key(pub_clas_id) 
-			references processos.publicacoes_classificadas(pub_clas_id)
+	constraint fk_publicacoes_classificadas foreign key(pub_clas_id) 
+		references processos.publicacoes_classificadas(pub_clas_id)
 );
 
+--procedure para salvar partes
 
 drop function processos.selec_pub_nao_classif;
 
-create function selec_pub_nao_classif() 
+create function processos.selec_pub_nao_classif() 
 	returns table(pub_id bigint, 
 				  pub_numero_processo varchar,
 				  pub_conteudo varchar)
@@ -158,7 +198,7 @@ drop procedure if exists processos.salva_pub_class;
 
 --procedure definitiva
 --procedure salva pub_classif
-create procedure salva_pub_class(
+create procedure processos.salva_pub_class(
 		pub_old_id in int,
 		conteudo IN varchar,
 		estrutura IN varchar(32),
@@ -229,7 +269,7 @@ end; $$
 
 drop procedure if exists salva_advogado; 
 
-create procedure salva_advogado(
+create procedure processos.salva_advogado(
 	adv_nome in varchar(64),
 	adv_oab in varchar(32),
 	adv_estado in char(2),
@@ -258,7 +298,7 @@ create procedure salva_advogado(
 	end $$
 
 --teste call procedure pub_class
-call salva_pub_class(
+call processos.salva_pub_class(
 				526934655,
 				'conteudo',
 				'abc',  
