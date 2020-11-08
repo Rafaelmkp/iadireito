@@ -21,12 +21,14 @@ $app->get('/', function()
 
     $page = new Page();
 
+    $estrutura_jud = htmlOptions::getEstruturaFromDB();
     $tipo_decisao = htmlOptions::getTipoDecisaoFromDB();
     $peca_produzir = htmlOptions::getPecaProduzirFromDB();
     $natureza = htmlOptions::getNaturezaFromDB();
 
     $page->setTpl("formulario", array(
         "summons"=>$summons->getValues(),
+        "estrutura"=>$estrutura_jud,
         "decisao_tipo"=>$tipo_decisao,
         "peca_produzir" => $peca_produzir,
         "natureza"=> $natureza
@@ -39,9 +41,10 @@ $app->post('/submit-summons', function () {
     echo "publicacao classificada!";
 
     $summons = new Summons();
-    // $summons->setData($_POST);
+    $summons->setData($_POST);
 
-    var_dump(Summons::procTest());
+    var_dump($summons);
+    //var_dump(Summons::procTest());
     //definir msg erro
 });
 
