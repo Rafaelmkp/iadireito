@@ -44,13 +44,10 @@
         <div class="dados">
           <label for="estrutura">Estrutura:</label>
           <select name="estrutura" id="estrutura">
-            <option value="branco"></option>
-            <option value="federal">Federal</option>
-            <option value="estadual">Estadual</option>
+            {loop="estrutura"}
+            <option value="{$value.est_id}">{$value.est_descricao}</option>
+            {/loop}
           </select>
-          <br /><br />
-          <label for="n_processo">Número CNJ:</label>
-          <input type="text" id="n_cnj" name="n_cnj" size="20" maxlength="20" />
           <br /><br />
           <label for="n_processo">Número do processo:</label>
           <input type="text" id="n_processo" name="n_processo" />
@@ -58,9 +55,7 @@
           <label for="natureza">Natureza:</label>
           <select name="natureza" id="natureza">
             {loop="$natureza"}
-            <option value="{$value.nat_descricao}">
-              {$value.nat_descricao}
-            </option>
+            <option value="{$value.nat_id}">{$value.nat_descricao}</option>
             {/loop}
           </select>
           <br /><br />
@@ -213,18 +208,14 @@
           <label for="recurso">Tipo de decisão:</label>
           <select name="recurso" id="recurso">
             {loop="$decisao_tipo"}
-            <option value="{$value.dec_descricao}">
-              {$value.dec_descricao}
-            </option>
+            <option value="{$value.dec_id}">{$value.dec_descricao}</option>
             {/loop}
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
           <select name="recurso" id="recurso">
             {loop="$peca_produzir"}
-            <option value="{$value.pec_descricao}">
-              {$value.pec_descricao}
-            </option>
+            <option value="{$value.pec_id}">{$value.pec_descricao}</option>
             {/loop}
           </select>
           <br /><br />
