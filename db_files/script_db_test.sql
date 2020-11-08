@@ -7,45 +7,20 @@ create schema processos;
 --table publicacao nao-classificadas
 CREATE TABLE processos.publicacao_uniritter (
 	pub_id bigserial NOT NULL,
-	pub_cnj_id int8 NOT NULL DEFAULT 1,
-	pub_cnj bool NOT NULL DEFAULT false,
 	pub_numero_processo varchar NULL,
 	pub_numerocnj jsonb NULL,
 	pub_tj_id int8 NULL,
 	pub_tj_descricao varchar NULL,
-	pub_jor_id int8 NULL,
 	pub_jor_edicao int8 NULL,
 	pub_jor_data_publicacao date NULL,
 	pub_pagina int4 NULL,
-	pub_orgao varchar NULL,
-	pub_vara varchar NULL,
-	pub_cidade varchar NULL,
-	pub_estado varchar NULL,
 	pub_hash varchar NOT NULL,
 	pub_conteudo text NOT NULL,
 	pub_conteudo_tsvector tsvector NULL,
 	"language" text NOT NULL DEFAULT 'portuguese'::text,
-	pub_data_processado timestamptz NULL DEFAULT now(),
 	pub_conteudo_tratado text NULL,
-	advogado_mapeado bool NULL,
-	advogado_mapeado_erro bool NULL,
-	pub_cnj_revisado bool NULL,
 	CONSTRAINT pk_publicacao_unirriter PRIMARY KEY (pub_id)
 );
-
---removendo colunas desnecesarias da tabela antiga
-alter table processos.publicacao_uniritter
-drop column if exists pub_cnj,
-drop column if exists advogado_mapeado,
-drop column if exists advogado_mapeado_erro,
-drop column if exists pub_cnj_revisado,
-drop column if exists pub_orgao,
-drop column if exists pub_vara,
-drop column if exists pub_cidade,
-drop column if exists pub_estado,
-drop column if exists pub_jor_id,
-drop column if exists pub_data_processado;
-
 
 --table publicacoes classificadas
 create table processos.publicacoes_classificadas (
