@@ -1,4 +1,4 @@
---function para buscar publicacao nao classificada
+--FUNCTION BUSCAR PUBLICACAO NAO CLASSIFICADA
 drop function if exists processos.select_pub_nao_classif;
 
 create function processos.select_pub_nao_classif() 
@@ -8,95 +8,97 @@ create function processos.select_pub_nao_classif()
 	begin
 		return query select (pu.pub_id::bigint, 
 				pu.pub_conteudo::text)
-		from processos.publicacao_uniritter pu left join processos.leitura l
-		on pu.pub_id = c.pub_n_classif_id
-		where l.pub_n_classif_id is null
-		and ;
+		from processos.publicacao_uniritter pu 
+		left join processos.publicacoes_classificas pc
+		left join processos.leitura l 
+		on pu.pub_id = pc.pub_id
+		on pu.pub_id = l.pub_id
+		where l.pub_id is null
+		and pc.pub_id is null
+		order by pub_id
+		fetch first 1 rows only;
 	
+	--NECESSARIO COLOCAR NA TABELA LEITURA
 	end; $$
 language plpgsql;
 
 
 select * from selec_pub_nao_classif();
 
+--PROCEDURE SALVA CLASSIFICACAO
 drop procedure if exists processos.salva_pub_class;
 
---procedure definitiva
---procedure salva pub_classif
 create procedure processos.salva_pub_class(
-		pub_old_id in int,
-		est_id IN int,
-		pclas_num_processo IN varchar(32),
-		natureza_processual IN varchar(32),
-		vara IN varchar(32),
-		estado IN char(2),
-		comarca IN varchar(32),
-		juiz IN varchar(32),
-		decisao_tipo IN varchar(32),
-		peca_produzir IN varchar(32),
-		inicio_prazo IN date,
-		prazo IN int,
-		dias_uteis IN boolean,
-		fim_prazo IN date,
-		ha_custas IN boolean,
+		ipub_old_id in int,
+		iest_id IN int,
+		ipclas_num_processo IN varchar(32),
+		inat_id IN int,
+		ipclas_vara IN varchar(32),
+		ipclas_estado IN char(2),
+		ipclas_comarca IN varchar(32),
+		ipclas_juiz IN varchar(32),
+		idec_id IN int,
+		ipec_id IN int,
+		ipclas_inicio_prazo IN date,
+		ipclas_prazo IN int,
+		ipclas_dias_uteis IN boolean,
+		ipclas_fim_prazo IN date,
+		ipclas_ha_custas IN boolean,
+		iuser_id IN int,
 		IDreturn INOUT bigint
 		)
 language plpgsql
 as $$
 begin
 	insert into processos.publicacoes_classificadas(
-		estrutura,
-		numero_cnj,
-		numero_processo,
-		natureza_processual,
-		vara,
-		estado,
-		comarca,
-		juiz,
-		decisao_tipo,
-		peca_produzir,
-		inicio_prazo,
-		prazo,
-		dias_uteis,
-		fim_prazo,
-		ha_custas
+		pub_id,
+		est_id,
+		pclas_num_processo,
+		nat_id,
+		pclas_vara,
+		pclas_estado,
+		pclas_comarca,
+		pclas_juiz,
+		dec_id,
+		pec_id,
+		pclas_inicio_prazo,
+		pclas_prazo,
+		pclas_dias_uteis,
+		pclas_fim_prazo,
+		pclas_ha_custas,
+		user_id,
 		)
-	values (estrutura,
-			numero_cnj,
-			numero_processo,
-			natureza_processual,
-			vara,
-			estado,
-			comarca,
-			juiz,
-			decisao_tipo,
-			peca_produzir,
-			inicio_prazo,
-			prazo,
-			dias_uteis,
-			fim_prazo,
-			ha_custas
+	values (ipub_old_id,
+		iest_id,
+		ipclas_num_processo,
+		inat_id,
+		ipclas_vara,
+		ipclas_estado,
+		ipclas_comarca,
+		ipclas_juiz,
+		idec_id,
+		ipec_id,
+		ipclas_inicio_prazo,
+		ipclas_prazo,
+		ipclas_dias_uteis,
+		ipclas_fim_prazo,
+		ipclas_ha_custas,
+		iuser_id,
 		   );
 		  
-	select currval into IDreturn from currval(pg_get_serial_sequence('processos.publicacoes_classificadas', 'pub_clas_id'));
+	select currval into IDreturn from currval(pg_get_serial_sequence('processos.publicacoes_classificadas', 'pclas_id'));
 
-	insert into processos.controle
-	values(
-		default,
-		pub_old_id,
-		IDreturn
-		);
-	
 	commit;
 end; $$
 
+--PROCEDURE PARA SALVAR ADVOGADO
 drop procedure if exists salva_advogado; 
 
 create procedure processos.salva_advogado(
-	adv_nome in varchar(64),
-	adv_oab in varchar(32),
-	adv_estado in char(2),
-	pub_id in int
+	iadv_nome in varchar(64),
+	iadv_oab in varchar(32),
+	iadv_estado in char(2),
+	ipub_id in int
 	)	
 	language plpgsql
 	as $$
@@ -105,22 +107,21 @@ create procedure processos.salva_advogado(
 		insert into processos.advogado
 		values(
 			default,
-			adv_nome,
-			adv_oab,
-			adv_estado
+			iadv_nome,
+			iadv_oab,
+			iadv_estado
 			);
 		
 		insert into processos.publicacao_advogado
 		values(
 			default,
 			currval(pg_get_serial_sequence('processos.advogado', 'adv_id')),
-			pub_id
+			ipub_id
 		);
 	
 		commit;
 	end $$
 
---procedure para salvar partes
 	
 	
 --teste call procedure pub_class
