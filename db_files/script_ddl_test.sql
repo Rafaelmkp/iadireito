@@ -1,4 +1,4 @@
-drop database if exists IADireito;
+drop database if exists processos;
 
 create database processos;
 
@@ -25,24 +25,24 @@ CREATE TABLE processos.publicacao_uniritter (
 --table publicacoes classificadas
 create table processos.publicacoes_classificadas (
 	pclas_id bigserial not null,
-	pub_id bigserial not null,
-	est_id serial not null,
-	cnj_id serial null,
+	pub_id bigint not null,
+	est_id int not null,
+	cnj_id bigint null,
 	pclas_num_processo varchar(32) null,
-	nat_id serial not null,
+	nat_id int not null,
 	pclas_vara varchar(32) null,
 	pclas_estado char(2) null,
 	pclas_comarca varchar(32) null,
 	pclas_juiz varchar(32),
-	dec_id serial not null,
-	pec_id serial not null,
+	dec_id int not null,
+	pec_id int not null,
 	pclas_inicio_prazo date null,
 	pclas_prazo int null,
 	pclas_dias_uteis boolean null,
 	pclas_fim_prazo date null,
 	pclas_ha_custas boolean null,
-	user_id serial not null,
-	user2_id serial null,
+	user_id int not null,
+	user2_id int null,
 	constraint pk_publicacoes_classificadas primary key(pclas_id),
 	constraint fk_publicacoes_nao_classificadas foreign key(pub_id)
 		references processos.publicacao_uniritter(pub_id),
@@ -53,7 +53,7 @@ create table processos.publicacoes_classificadas (
 	constraint fk_id_user foreign key(user_id) 
 		references processos.usuario(user_id),
 	constraint fk_id_user2 foreign key(user2_id) 
-		references processos.usuario(user2_id),
+		references processos.usuario(user_id),
 	constraint fk_natureza_processual foreign key(nat_id) 
 		references processos.natureza_processual(nat_id),
 	constraint fk_decisao_tipo foreign key(dec_id) 
@@ -61,6 +61,10 @@ create table processos.publicacoes_classificadas (
 	constraint fk_peca_produzir foreign key(pec_id) 
 		references processos.peca_produzir(pec_id)
 );
+
+alter table processos.publicacoes_classificadas
+alter column nat_id type int;
+
 
 --table usuario / fk na tabela nova ok
 create table processos.usuario (
@@ -114,8 +118,8 @@ create table processos.publicacao_advogado (
 --table estrutura_jud / fk na tabela nova ok
 create table processos.estrutura_jud (
 	est_id serial not null,
-	est_descricao varchar(32) not null
-	constraint pk_estrutura_jud primary key(est_id);
+	est_descricao varchar(32) not null,
+	constraint pk_estrutura_jud primary key(est_id)
 );
 
 --table natureza processual / fk na tabela nova ok

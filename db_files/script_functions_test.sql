@@ -6,24 +6,35 @@ create function processos.select_pub_nao_classif()
 				  pub_conteudo varchar)
 	as $$ 
 	begin
-		return query select (pu.pub_id::bigint, 
-				pu.pub_conteudo::text)
+		return query select pu.pub_id::bigint,
+				pu.pub_conteudo::character varying
 		from processos.publicacao_uniritter pu 
-		left join processos.publicacoes_classificas pc
-		left join processos.leitura l 
+		left join processos.publicacoes_classificadas pc
 		on pu.pub_id = pc.pub_id
-		on pu.pub_id = l.pub_id
+		left join processos.publicacao_leitura l 
+		on pc.pub_id = l.pub_id
 		where l.pub_id is null
 		and pc.pub_id is null
-		order by pub_id
-		fetch first 1 rows only;
+		order by pu.pub_id
+		limit 1;
 	
 	--NECESSARIO COLOCAR NA TABELA LEITURA
 	end; $$
 language plpgsql;
 
 
-select * from selec_pub_nao_classif();
+select * from select_pub_nao_classif();
+
+select pu.pub_id, 
+				pu.pub_conteudo
+		from processos.publicacao_uniritter pu 
+		left join processos.publicacoes_classificadas pc
+		on pu.pub_id = pc.pub_id
+		left join processos.publicacao_leitura l 
+		on pc.pub_id = l.pub_id
+		where l.pub_id is null
+		and pc.pub_id is null
+		limit 1;
 
 --PROCEDURE SALVA CLASSIFICACAO
 drop procedure if exists processos.salva_pub_class;
@@ -66,7 +77,7 @@ begin
 		pclas_dias_uteis,
 		pclas_fim_prazo,
 		pclas_ha_custas,
-		user_id,
+		user_id
 		)
 	values (ipub_old_id,
 		iest_id,
@@ -83,7 +94,7 @@ begin
 		ipclas_dias_uteis,
 		ipclas_fim_prazo,
 		ipclas_ha_custas,
-		iuser_id,
+		iuser_id
 		   );
 		  
 	select currval into IDreturn from currval(pg_get_serial_sequence('processos.publicacoes_classificadas', 'pclas_id'));

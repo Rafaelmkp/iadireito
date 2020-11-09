@@ -13,9 +13,7 @@ class Summons extends Model {
 
         $sql = new Sql();
 
-        $results = $sql->select("SELECT * FROM processos.select_pub_nao_classif() 
-            AS (pub_id BIGINT, pub_conteudo TEXT)",
-            []
+        $results = $sql->select("SELECT * FROM processos.select_pub_nao_classif()"
         );
 
         //criando chaves independentes dos nomes usados no DB
@@ -73,7 +71,7 @@ class Summons extends Model {
     }
     
 
-    public function procTest() {
+    public function saveClassifiedSummons() {
         $sql = new Sql();
 
         $return = 0;
@@ -103,7 +101,8 @@ class Summons extends Model {
                 ':RETURN'=>$return
         ]);
 
-        return $results[0];
+        return $results[0]["idreturn"];
     }
+
 }
 ?>

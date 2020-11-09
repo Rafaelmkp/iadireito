@@ -19,17 +19,17 @@ $app->get('/', function()
 
     $summons->setToSession();
 
-    $page = new Page();
-
     $estrutura_jud = htmlOptions::getEstruturaFromDB();
-    $tipo_decisao = htmlOptions::getTipoDecisaoFromDB();
+    $decisao_tipo = htmlOptions::getTipoDecisaoFromDB();
     $peca_produzir = htmlOptions::getPecaProduzirFromDB();
     $natureza = htmlOptions::getNaturezaFromDB();
 
+    $page = new Page();
+
     $page->setTpl("formulario", array(
         "summons"=>$summons->getValues(),
-        "estrutura"=>$estrutura_jud,
-        "decisao_tipo"=>$tipo_decisao,
+        "estrutura_jud"=>$estrutura_jud,
+        "decisao_tipo"=>$decisao_tipo,
         "peca_produzir" => $peca_produzir,
         "natureza"=> $natureza
     ));
