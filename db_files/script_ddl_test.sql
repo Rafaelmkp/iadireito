@@ -96,9 +96,8 @@ create table processos.publicacao_leitura (
 --table advogado
 create table processos.advogado (
 	adv_id serial not null,
-	adv_nome varchar(64)not null,
-	adv_oab varchar(32)null,
-	adv_estado char(2)null,
+	adv_nome varchar(64) not null,
+	adv_oab varchar(32) null,
 	constraint pk_advogado primary key(adv_id)
 );
 
