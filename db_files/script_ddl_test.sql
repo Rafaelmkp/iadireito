@@ -41,6 +41,7 @@ create table processos.publicacoes_classificadas (
 	pclas_dias_uteis boolean null,
 	pclas_fim_prazo date null,
 	pclas_ha_custas boolean null,
+	pclas_val_custas int,
 	user_id int not null,
 	user2_id int null,
 	constraint pk_publicacoes_classificadas primary key(pclas_id),
@@ -61,9 +62,6 @@ create table processos.publicacoes_classificadas (
 	constraint fk_peca_produzir foreign key(pec_id) 
 		references processos.peca_produzir(pec_id)
 );
-
-alter table processos.publicacoes_classificadas
-alter column nat_id type int;
 
 
 --table usuario / fk na tabela nova ok
