@@ -148,7 +148,7 @@
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
-          <select name="recurso" id="recurso">
+          <select name="tipo_peca" id="tipo_peca">
             <?php $counter1=-1;  if( isset($peca_produzir) && ( is_array($peca_produzir) || $peca_produzir instanceof Traversable ) && sizeof($peca_produzir) ) foreach( $peca_produzir as $key1 => $value1 ){ $counter1++; ?>
             <option value="<?php echo htmlspecialchars( $value1["pec_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["pec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
             <?php } ?>

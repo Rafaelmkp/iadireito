@@ -43,6 +43,9 @@ $app->post('/submit-summons', function () {
     $summons = new Summons();
     $summons->setData($_POST);
 
+    //var_dump($summons->saveClassification());
+
+
     var_dump($summons);
     //var_dump(Summons::procTest());
     //definir msg erro

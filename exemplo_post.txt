@@ -1,0 +1,66 @@
+C:\wamp64\www\iadireito\classifying\index.php:46:
+object(IADireito\Summons)[20]
+  private 'values' (IADireito\Model) => 
+    array (size=22)
+      'conteudo' => string '            1111111111111111111111
+
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1
+PUBLICACAO EXEMPLO 1          ' (length=222)
+      'estrutura' => string '2' (length=1)
+      'n_processo' => string 'processoabc111' (length=14)
+      'natureza' => string '2' (length=1)
+      'vara' => string '1' (length=1)
+      'estado' => string 'RS' (length=2)
+      'cidade' => string 'Aceguá' (length=7)
+      'juiz' => string 'juiz fulano' (length=11)
+      'autor' => 
+        array (size=4)
+          0 => string 'autor fulano 1' (length=14)
+          1 => string 'autor fulano 2' (length=14)
+          2 => string 'autor fulano 3' (length=14)
+          3 => string 'autor fulano 4' (length=14)
+      'advautor' => 
+        array (size=4)
+          0 => string 'adv autor 1' (length=11)
+          1 => string 'adv autor 2' (length=11)
+          2 => string 'adv autor 3' (length=11)
+          3 => string 'adv autor 4' (length=11)
+      'oabadvautor' => 
+        array (size=4)
+          0 => string 'oab123rs1' (length=9)
+          1 => string 'oab123rs2' (length=9)
+          2 => string 'oab123rs3' (length=9)
+          3 => string 'oab123rs4' (length=9)
+      'reu' => 
+        array (size=4)
+          0 => string 'reu fulano 1' (length=12)
+          1 => string 'reu fulano 2' (length=12)
+          2 => string 'reu fulano 3' (length=12)
+          3 => string 'reu fulano 4' (length=12)
+      'advreu' => 
+        array (size=4)
+          0 => string 'adv reu1' (length=8)
+          1 => string 'adv reu1' (length=8)
+          2 => string 'adv reu2' (length=8)
+          3 => string 'adv reu3' (length=8)
+      'oabadvreu' => 
+        array (size=4)
+          0 => string 'oab000rs1' (length=9)
+          1 => string 'oab000rs2' (length=9)
+          2 => string 'oab000rs3' (length=9)
+          3 => string 'oab000rs4' (length=9)
+      'recurso' => string '2' (length=1)
+      'tipo_peca' => string '3' (length=1)
+      'inicio' => string '2020-11-17' (length=10)
+      'dias_prazo' => string '10' (length=2)
+      'dias' => string 'corridos' (length=8)
+      'fim' => string '2020-11-27' (length=10)
+      'yesno' => string 'sim' (length=3)
+      'custas' => string '20000' (length=5)
+      'b2' => string 'Enviar' (length=6)

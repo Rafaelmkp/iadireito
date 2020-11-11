@@ -71,38 +71,55 @@ class Summons extends Model {
     }
     
 
-    public function saveClassifiedSummons() {
-        $sql = new Sql();
+    public function saveClassification() {
 
-        $return = 0;
+        $id = 0;
 
-        $results = $sql->outputProcedure("CALL processos.salva_pub_class(
-            :OLD_ID ,:CONTEUDO, :ESTRUT, :NUM_CNJ, :NUM_PROC, 
-            :NAT_PROC, :VARA, :ESTADO, :COMARCA, :JUIZ, :DEC_TIPO, :PECA_PROD, 
-            :INC_PRAZO, :PRAZO, :UTEIS, :FIM_PRAZO, :CUSTAS, :RETURN)",
-            [
-                ':OLD_ID'=>$this->getid(),
-                ':CONTEUDO'=>"conteudo",
-                ':ESTRUT'=> "processual", 
-                ':NUM_CNJ'=> 1234, 
-                ':NUM_PROC'=> "abc123", 
-                ':NAT_PROC'=> "adm", 
-                ':VARA'=> "3",
-                ':ESTADO'=> "rs", 
-                ':COMARCA'=> "noia",
-                ':JUIZ'=>"juiz",
-                ':DEC_TIPO'=>"decisao",
-                ':PECA_PROD'=>"2020-10-10",
-                ':INC_PRAZO'=>NULL,
-                ':PRAZO'=>10,
-                ':UTEIS'=>true,
-                ':FIM_PRAZO'=>NULL,
-                ':CUSTAS'=>true,
-                ':RETURN'=>$return
-        ]);
+        //call procedure publicacao
+        $this->saveClassifiedSummons($id);
 
-        return $results[0]["idreturn"];
+        return $id;
+
+        //call procedure advogado
+            //procedure jah salva em adv_x_pub
+
+        //call procedure parte
+            //procedure jah salva em parte_x_pub
+
+        
     }
 
+    //futuramente tratar usuario classificador
+    public function saveClassifiedSummons(&$idreturn) 
+    {
+        $sql = new Sql();
+
+        $result = $sql->outputProcedure("CALL processos.salva_pub_class(
+            :OLD_ID ,:ESTRUTURA, :N_PROCESSO, :NATUREZA, :VARA, :ESTADO, 
+            :CIDADE, :JUIZ, :DECISAO_TIPO, :PECA_PRODUZIR, :INI_PRAZO, :PRAZO, 
+            :FIM_PRAZO, :HA_CUSTAS, :VAL_CUSTAS, :USER, :RETURN
+            )",
+            [
+                'OLD_ID' => $this->getid(),
+                'ESTRUTURA' => $this->getestrutura(),
+                'N_PROCESSO' => $this->getn_processo(),
+                'NATUREZA' => $this->getnatureza(),
+                'VARA' => $this->getvara(),
+                'ESTADO' => $this->getestado(),
+                'CIDADE' => $this->getcidade(),
+                'JUIZ' => $this->getjuiz(),
+                'DECISAO_TIPO' => $this->getrecurso(),
+                'PECA_PRODUZIR' => $this->gettipo_peca(),
+                'INI_PRAZO' => $this->getinicio(),
+                'PRAZO' => $this->getdias_prazo(),
+                'FIM_PRAZO' => $this->getfim(),
+                'HA_CUSTAS' =>$this->getyesno(),
+                'VAL_CUSTAS' => $this->getcustas(),
+                'USER' => 1 ,
+                'RETURN'=>0
+        ]);
+
+        $idreturn = $result[0]['idreturn'];
+    }
 }
 ?>
