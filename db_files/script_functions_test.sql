@@ -77,6 +77,7 @@ begin
 		pclas_dias_uteis,
 		pclas_fim_prazo,
 		pclas_ha_custas,
+		pclas_val_custas,
 		user_id
 		)
 	values (ipub_old_id,
@@ -134,27 +135,29 @@ create procedure processos.salva_advogado(
 	end $$
 
 	
+delete from publicacoes_classificadas;
+
+select * from publicacoes_classificadas;
 	
 --teste call procedure pub_class
 call processos.salva_pub_class(
-				526934655,
-				'conteudo',
-				'abc',  
-				123, 
-				'123br',
-				'natureza',
-				'vara' ,
-				'rs', 
-				'comarca', 
-				'juiz', 
-				'decisao', 
-				'peca',
-				'2020-10-10', 
-				12, 
-				true, 
-				NULL, 
-				true,
-				0);
+				1,
+		2,
+		'prcesso 123',
+		2,
+		'2',
+		'rs',
+		'icara',
+		'juiz fulano',
+		1,
+		1,
+		'01-10-2020',
+		10,
+		true,
+		'10-10-2020',
+		true,
+		1,
+		0);
 			
 
 --teste call procedure adv
