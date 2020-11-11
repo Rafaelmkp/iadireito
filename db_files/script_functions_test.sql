@@ -109,8 +109,7 @@ drop procedure if exists salva_advogado;
 create procedure processos.salva_advogado(
 	iadv_nome in varchar(64),
 	iadv_oab in varchar(32),
-	iadv_estado in char(2),
-	ipub_id in int
+	ipclas_id in int
 	)	
 	language plpgsql
 	as $$
@@ -120,21 +119,42 @@ create procedure processos.salva_advogado(
 		values(
 			default,
 			iadv_nome,
-			iadv_oab,
-			iadv_estado
+			iadv_oab
 			);
 		
 		insert into processos.publicacao_advogado
 		values(
 			default,
 			currval(pg_get_serial_sequence('processos.advogado', 'adv_id')),
-			ipub_id
+			ipclas_id
 		);
 	
 		commit;
 	end $$
 
 	
+drop procedure if exists processos.salva_partes;
+
+create procedure processos.salva_partes(	
+	ipartes_nome in varchar(64),
+	iprates_is_reu in boolean,
+	ipclas_id in int
+	)	
+	language plpgsql
+	as $$
+	begin
+		
+		insert into processos.partes
+		values(
+			default,
+			ipartes_nome,
+			iprates_is_reu,
+			ipclas_id
+			);
+	
+		commit;
+	end $$
+
 delete from publicacoes_classificadas;
 
 select * from publicacoes_classificadas;

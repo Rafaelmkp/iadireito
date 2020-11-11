@@ -73,18 +73,28 @@ class Summons extends Model {
 
     public function saveClassification() {
 
-        $id = 0;
+        $idNewPub = 0;
 
         //call procedure publicacao
-        $this->saveClassifiedSummons($id);
+        $this->saveClassifiedSummons($idNewPub);
 
-        return $id;
+        //call procedure parte -- autor
+        $this->saveClassifiedSide($this->getautor(), false, $idNewPub);
 
-        //call procedure advogado
-            //procedure jah salva em adv_x_pub
+        //call procedure advogado -- autor
+        $this->saveClassifiedLawyer(
+            $this->getadvautor(),$this->getoabadvautor(), $idNewPub
+        );
 
-        //call procedure parte
-            //procedure jah salva em parte_x_pub
+        //call procedure parte -- reu
+        $this->saveClassifiedSide($this->getreu(), true, $idNewPub);
+
+        //call procedure advogado -- reu
+        $this->saveClassifiedLawyer(
+            $this->getadvreu(),$this->getoabadvreu(), $idNewPub
+        );
+
+
 
         
     }
@@ -120,6 +130,23 @@ class Summons extends Model {
         ]);
 
         $idreturn = $result[0]['idreturn'];
+    }
+
+    public function saveClassifiedLawyer($lawyer = [], $oab = [], $pclas_id)
+    {
+        $sql = new Sql();
+        array_map(function ($lawyer, $oab){
+            $sql->sleect("CALL processos.salva_advogados(:NOME, :OAB, :PCLAS_ID)", []);
+        });
+    }
+
+    public function saveClassifiedSide($side = [], $is_reu, $pclas_id)
+    {
+        $sql = new Sql();
+
+        foreach($side as $key => $value) {
+            $sql->sleect("CALL processos.salva_partes(:NOME, :IS_REU, :PCLAS_ID)", []);
+        }
     }
 }
 ?>
