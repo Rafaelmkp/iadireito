@@ -28,6 +28,12 @@
       <br />
       <div class="parent">
         <div class="conteudo">
+          <!--INSERIDO PARA SÓ PARA TESTES-->
+          <button type="button" onclick="window.location.href='/new-summons'">
+            Buscar nova publicação
+          </button>
+          <br /><br />
+          <!--FIM DE TESTE / BOTÃO DEFINITIVO A INSERIR-->
           <label for="conteúdo">Nota de expediente:</label>
           <br /><br />
           <textarea
@@ -37,7 +43,9 @@
             cols="50"
             align="center"
           >
+          {if="$summons != NULL"}
             {$summons.conteudo}
+          {/if}
           </textarea>
         </div>
 
@@ -171,9 +179,9 @@
             size="2"
             maxlength="2"
           />
-          <input type="radio" id="corridos" name="dias" value="corridos" />
+          <input type="radio" id="corridos" name="dias" value="true" />
           Dias corridos
-          <input type="radio" id="uteis" name="dias" value="uteis" />
+          <input type="radio" id="uteis" name="dias" value="false" />
           Dias úteis
           <br /><br />
           <label for="prazo_final">Fim do prazo:</label>

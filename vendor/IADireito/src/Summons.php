@@ -18,7 +18,7 @@ class Summons extends Model {
 
         //criando chaves independentes dos nomes usados no DB
         $data = [];
-        $data["id"] = $results[0]["pub_id"];
+        $data["pub_id"] = $results[0]["pub_id"];
         $data["conteudo"] = $results[0]["pub_conteudo"];
 
         return $data;
@@ -31,18 +31,6 @@ class Summons extends Model {
         } catch (\Exception $e) {
             echo "não foi possivel retornar uma intimação";
         }
-    }
-
-    //METODO A DESENVOLVER
-    public function saveSummons() 
-    {
-        $sql = new Sql();
-
-        //query a desenvolver
-        //$sql->query("CALL sp_summons_save(
-        //    :ESTRUTURA, :N_CNJ,  )");
-
-        return true;
     }
 
     public function setToSession() 
@@ -60,19 +48,30 @@ class Summons extends Model {
         {
             $summons->get((int)$_SESSION[Summons::SESSION]['pub_id']);
         }
-        else 
-        {
-            $summons = Summons::getSummons();
-
-            $summon->setToSession();
-        }
 
         return $summons;
     }
+
+    public function get(int $pub_id)
+    {
+        $sql = new Sql();
+
+        $results = $sql->select("SELECT * FROM processos.publicacao_uniritter 
+            WHERE pub_id = :PUB_ID", 
+            array(
+                ':PUB_ID'=>$pub_id
+        ));
+
+        $data = [];
+        $data["pub_id"] = $results[0]["pub_id"];
+        $data["conteudo"] = $results[0]["pub_conteudo"];
+
+        $this->setData($data);
+    }
     
 
-    public function saveClassification() {
-
+    public function saveClassification() 
+    {
         $idNewPub = 0;
 
         //call procedure publicacao
@@ -92,14 +91,11 @@ class Summons extends Model {
         //call procedure advogado -- reu
         $this->saveClassifiedLawyer(
             $this->getadvreu(),$this->getoabadvreu(), $idNewPub
-        );
-
-
-
-        
+        );        
     }
 
     //futuramente tratar usuario classificador
+    //COM BUG NECESSÁRIO AJUSTAR
     public function saveClassifiedSummons(&$idreturn) 
     {
         $sql = new Sql();
@@ -107,10 +103,10 @@ class Summons extends Model {
         $result = $sql->outputProcedure("CALL processos.salva_pub_class(
             :OLD_ID ,:ESTRUTURA, :N_PROCESSO, :NATUREZA, :VARA, :ESTADO, 
             :CIDADE, :JUIZ, :DECISAO_TIPO, :PECA_PRODUZIR, :INI_PRAZO, :PRAZO, 
-            :FIM_PRAZO, :HA_CUSTAS, :VAL_CUSTAS, :USER, :RETURN
+            :DIAS_UTEIS, :FIM_PRAZO, :HA_CUSTAS, :VAL_CUSTAS, :USER, :RETURN
             )",
             [
-                'OLD_ID' => $this->getid(),
+                'OLD_ID' => $this->getpub_id(),
                 'ESTRUTURA' => $this->getestrutura(),
                 'N_PROCESSO' => $this->getn_processo(),
                 'NATUREZA' => $this->getnatureza(),
@@ -122,10 +118,11 @@ class Summons extends Model {
                 'PECA_PRODUZIR' => $this->gettipo_peca(),
                 'INI_PRAZO' => $this->getinicio(),
                 'PRAZO' => $this->getdias_prazo(),
+                'DIAS_UTEIS' => (bool)$this->getdias(),
                 'FIM_PRAZO' => $this->getfim(),
                 'HA_CUSTAS' =>$this->getyesno(),
-                'VAL_CUSTAS' => $this->getcustas(),
-                'USER' => 1 ,
+                'VAL_CUSTAS' => (float)$this->getcustas(),
+                'USER' => 1,
                 'RETURN'=>0
         ]);
 

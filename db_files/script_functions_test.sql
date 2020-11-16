@@ -55,6 +55,7 @@ create procedure processos.salva_pub_class(
 		ipclas_dias_uteis IN boolean,
 		ipclas_fim_prazo IN date,
 		ipclas_ha_custas IN boolean,
+		ipclas_val_custas in numeric,
 		iuser_id IN int,
 		IDreturn INOUT bigint
 		)
@@ -95,6 +96,7 @@ begin
 		ipclas_dias_uteis,
 		ipclas_fim_prazo,
 		ipclas_ha_custas,
+		ipclas_val_custas,
 		iuser_id
 		   );
 		  
@@ -176,6 +178,7 @@ call processos.salva_pub_class(
 		true,
 		'10-10-2020',
 		true,
+		1.0,
 		1,
 		0);
 			

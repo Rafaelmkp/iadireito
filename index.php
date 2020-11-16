@@ -13,11 +13,10 @@ $app->config('debug', true);
 
 $app->get('/', function()
 {
+    
     $summons = new Summons();
 
-    $summons->setSummons();
-
-    $summons->setToSession();
+    $summons = Summons::getFromSession();
 
     $estrutura_jud = htmlOptions::getEstruturaFromDB();
     $decisao_tipo = htmlOptions::getTipoDecisaoFromDB();
@@ -33,6 +32,20 @@ $app->get('/', function()
         "peca_produzir" => $peca_produzir,
         "natureza"=> $natureza
     ));
+
+});
+
+$app->get('/new-summons', function() 
+{
+    $summons = new Summons();
+
+    $summons->setData(Summons::getSummons());
+
+    $summons->setToSession();
+
+    header("Location: /");
+    exit;
+
 });
 
 //*NECESSITA DE AJUSTES
@@ -41,9 +54,14 @@ $app->post('/submit-summons', function () {
     echo "publicacao classificada!";
 
     $summons = new Summons();
+
+    $_POST['pub_id'] = $_SESSION[Summons::SESSION]['pub_id'];
+
     $summons->setData($_POST);
 
-    //$summons->saveClassifiedSummons();
+    session_unset();
+
+    $summons->saveClassification();
 
     Header("Location: /");
     exit;
