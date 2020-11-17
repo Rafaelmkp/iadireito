@@ -39,9 +39,12 @@ $app->get('/new-summons', function()
 {
     $summons = new Summons();
 
-    $summons->setData(Summons::getSummons());
-
-    $summons->setToSession();
+    if(!$_SESSION[Summons::SESSION]) {
+        $summons->setData(Summons::getSummons());
+        $summons->setToSession();
+    } else {
+        $summons->setData($_SESSION);
+    } git 
 
     header("Location: /");
     exit;
