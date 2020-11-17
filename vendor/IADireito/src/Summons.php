@@ -56,7 +56,7 @@ class Summons extends Model {
     {
         $sql = new Sql();
 
-        $results = $sql->select("SELECT * FROM processos.publicacao_uniritter 
+        $results = $sql->select("SELECT pub_id, pub_conteudo FROM processos.publicacao_uniritter 
             WHERE pub_id = :PUB_ID", 
             array(
                 ':PUB_ID'=>$pub_id
@@ -77,37 +77,38 @@ class Summons extends Model {
         $errorMsg = 0;
 
         //call procedure publicacao
-        $errorMsg = $this->saveClassifiedSummons($idNewPub);
+        //FUNCTION RECEBE EDEREÇO DA VARIAVEL
+        $isSummonsClassified = $this->saveClassifiedSummons($idNewPub);
 
-        var_dump($errorMsg);
+        if($isSummonsClassified) {
 
-        if(!$errorMsg) {
-            //call procedure parte -- autor
-            $this->saveClassifiedSide($this->getautor(), false, $idNewPub);
-        }
+            if($this->getautor()) {
+                //call procedure parte -- autor
+                $this->saveClassifiedSide($this->getautor(), false, $idNewPub);
+            }
+            
+            if($this->getadvautor()) {
+                //call procedure advogado -- autor
+                $this->saveClassifiedLawyer(
+                    $this->getadvautor(),$this->getoabadvautor(), $idNewPub
+                );
+            }
 
-        if(!$errorMsg) {
-            //call procedure advogado -- autor
-            $this->saveClassifiedLawyer(
-                $this->getadvautor(),$this->getoabadvautor(), $idNewPub
-            );
-        }
-        
-        if(!$errorMsg) {
-            //call procedure parte -- reu
-            $this->saveClassifiedSide($this->getreu(), true, $idNewPub);
-        }
-        
-        if(!$errorMsg) {
-            //call procedure advogado -- reu
-            $this->saveClassifiedLawyer(
-                $this->getadvreu(),$this->getoabadvreu(), $idNewPub
-            );
+            if($this->getreu()) {
+                //call procedure parte -- reu
+                $this->saveClassifiedSide($this->getreu(), true, $idNewPub);
+            }
+
+            if($this->getadvreu()) {
+                //call procedure advogado -- reu
+                $this->saveClassifiedLawyer(
+                    $this->getadvreu(),$this->getoabadvreu(), $idNewPub
+                );
+            }
         }
     }
 
     //futuramente tratar usuario classificador
-    //COM BUG NECESSÁRIO AJUSTAR
     public function saveClassifiedSummons(&$idreturn) 
     {
         $sql = new Sql();
@@ -148,7 +149,6 @@ class Summons extends Model {
         } catch (\Exception $e) {
             $errorMsg = $sql->getError();
             print_r($errorMsg);
-
             return false;
         }
     }
@@ -157,16 +157,24 @@ class Summons extends Model {
     {
         $sql = new Sql();
         array_map(function ($lawyer, $oab){
-            $sql->select("CALL processos.salva_advogados(:NOME, :OAB, :PCLAS_ID)", []);
+            $sql->select("CALL processos.salva_advogados(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
+                ':IADV_NOME' => $oab,
+                ':IADV_OAB' => $lawyer,
+                ':PCLAS_ID' => $pclas_id
+            ]);
         });
     }
 
-    public function saveClassifiedSide($side = [], $is_reu, $pclas_id)
+    public function saveClassifiedSide($sides = [], $is_reu, $pclas_id)
     {
         $sql = new Sql();
 
-        foreach($side as $key => $value) {
-            $sql->select("CALL processos.salva_partes(:NOME, :IS_REU, :PCLAS_ID)", []);
+        foreach($sides as $value) {
+            $sql->select("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
+                ':IPARTES_NOME' => $value,
+                ':IS_REU' => $is_reu,
+                ':PCLAS_ID' => $pclas_id
+            ]);
         }
     }
 }

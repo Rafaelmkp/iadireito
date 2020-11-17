@@ -139,7 +139,7 @@ drop procedure if exists processos.salva_partes;
 
 create procedure processos.salva_partes(	
 	ipartes_nome in varchar(64),
-	iprates_is_reu in boolean,
+	ipartes_is_reu in boolean,
 	ipclas_id in int
 	)	
 	language plpgsql
@@ -150,7 +150,7 @@ create procedure processos.salva_partes(
 		values(
 			default,
 			ipartes_nome,
-			iprates_is_reu,
+			ipartes_is_reu,
 			ipclas_id
 			);
 	
@@ -173,7 +173,7 @@ call processos.salva_pub_class(
 		'juiz fulano',
 		1,
 		1,
-		'01-10-2020',
+		'2020-10-10',
 		10,
 		true,
 		'10-10-2020',

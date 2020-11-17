@@ -181,7 +181,7 @@
           />
           <input type="radio" id="corridos" name="dias" value="true" />
           Dias corridos
-          <input type="radio" id="uteis" name="dias" value="false" />
+          <input type="radio" id="uteis" name="dias" value="false" checked />
           Dias úteis
           <br /><br />
           <label for="prazo_final">Fim do prazo:</label>
