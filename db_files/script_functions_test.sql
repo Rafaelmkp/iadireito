@@ -4,10 +4,11 @@ drop function if exists processos.select_pub_nao_classif;
 create function processos.select_pub_nao_classif() 
 	returns table(pub_id bigint, 
 				  pub_conteudo varchar)
-	as $$ 
+	as $$
+	declare
+		old_id bigint;
 	begin
-		return query select pu.pub_id::bigint,
-				pu.pub_conteudo::character varying
+		select pu.pub_id::bigint into old_id
 		from processos.publicacao_uniritter pu 
 		left join processos.publicacoes_classificadas pc
 		on pu.pub_id = pc.pub_id
@@ -17,24 +18,20 @@ create function processos.select_pub_nao_classif()
 		and pc.pub_id is null
 		order by pu.pub_id
 		limit 1;
-	
-	--NECESSARIO COLOCAR NA TABELA LEITURA
-	end; $$
-language plpgsql;
+	insert into processos.publicacao_leitura(pub_id, lec_date)
+			values (old_id, now());
+	return query select pu.pub_id::bigint,
+				     	pu.pub_conteudo::character varying
+				 from processos.publicacao_uniritter pu
+				 where pu.pub_id = old_id;
+	end; 
+$$ language plpgsql;
 
 
 select * from select_pub_nao_classif();
 
-select pu.pub_id, 
-				pu.pub_conteudo
-		from processos.publicacao_uniritter pu 
-		left join processos.publicacoes_classificadas pc
-		on pu.pub_id = pc.pub_id
-		left join processos.publicacao_leitura l 
-		on pc.pub_id = l.pub_id
-		where l.pub_id is null
-		and pc.pub_id is null
-		limit 1;
+select * from processos.publicacao_leitura;
+--necessario criar trigger para exclusao de publicaca_leitura
 
 --PROCEDURE SALVA CLASSIFICACAO
 drop procedure if exists processos.salva_pub_class;
