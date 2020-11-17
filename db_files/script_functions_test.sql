@@ -13,7 +13,7 @@ create function processos.select_pub_nao_classif()
 		left join processos.publicacoes_classificadas pc
 		on pu.pub_id = pc.pub_id
 		left join processos.publicacao_leitura l 
-		on pc.pub_id = l.pub_id
+		on pu.pub_id = l.pub_id
 		where l.pub_id is null
 		and pc.pub_id is null
 		order by pu.pub_id
@@ -27,10 +27,22 @@ create function processos.select_pub_nao_classif()
 	end; 
 $$ language plpgsql;
 
+		select pu.pub_id, pu.pub_conteudo
+		from processos.publicacao_uniritter pu 
+		left join processos.publicacoes_classificadas pc
+		on pu.pub_id = pc.pub_id
+		left join processos.publicacao_leitura l 
+		on pu.pub_id = l.pub_id
+		where l.pub_id is null
+		and pc.pub_id is null
+		order by pu.pub_id
+		limit 1;
 
 select * from select_pub_nao_classif();
 
 select * from processos.publicacao_leitura;
+
+delete from processos.publicacao_leitura;
 --necessario criar trigger para exclusao de publicaca_leitura
 
 --PROCEDURE SALVA CLASSIFICACAO
