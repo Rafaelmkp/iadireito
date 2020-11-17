@@ -59,10 +59,29 @@ $app->post('/submit-summons', function () {
 
     $summons->setData($_POST);
 
+    var_dump($summons->getpub_id());
+    var_dump($summons->getestrutura());
+    var_dump($summons->getn_processo());
+    var_dump($summons->getnatureza());
+    var_dump($summons->getvara());
+    var_dump($summons->getestado());
+    var_dump($summons->getcidade());
+    var_dump($summons->getjuiz());
+    var_dump($summons->getrecurso());
+    var_dump($summons->gettipo_peca());
+    var_dump($summons->getinicio());
+    var_dump($summons->getdias_prazo());
+    var_dump((bool)$summons->getdias());
+    var_dump($summons->getfim());
+    var_dump((bool)$summons->getyesno());
+    var_dump($summons->getcustas());
+
+    exit;
+
+    //$summons->saveClassification();
+
     session_unset();
-
-    $summons->saveClassification();
-
+    
     Header("Location: /");
     exit;
 });

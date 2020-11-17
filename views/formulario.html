@@ -181,7 +181,7 @@
           />
           <input type="radio" id="corridos" name="dias" value="true" />
           Dias corridos
-          <input type="radio" id="uteis" name="dias" value="false" />
+          <input type="radio" id="uteis" name="dias" value="false" checked />
           Dias úteis
           <br /><br />
           <label for="prazo_final">Fim do prazo:</label>
@@ -199,14 +199,15 @@
             onclick="show1();"
             name="yesno"
             id="yesCheck"
-            value="sim"
+            value="true"
           />Sim
           <input
             type="radio"
             onclick="show2();"
             name="yesno"
             id="noCheck"
-            value="nao"
+            value="false"
+            checked
           />Não <br /><br />
           <div class="hide" id="div1">
             <label for="custas" class>Valor a pagar:</label>

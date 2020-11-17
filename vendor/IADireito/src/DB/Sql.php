@@ -97,6 +97,13 @@ class Sql {
 		return $stmt->fetchAll();
 	}
 
+	public function getError() {
+
+		$errorMsg = $this->conn->errorInfo();
+
+		return $errorMsg;
+	}
+
 }
 
  ?>

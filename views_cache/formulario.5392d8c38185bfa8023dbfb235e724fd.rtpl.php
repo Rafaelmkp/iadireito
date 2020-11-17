@@ -199,14 +199,15 @@
             onclick="show1();"
             name="yesno"
             id="yesCheck"
-            value="sim"
+            value="true"
           />Sim
           <input
             type="radio"
             onclick="show2();"
             name="yesno"
             id="noCheck"
-            value="nao"
+            value="false"
+            checked
           />Não <br /><br />
           <div class="hide" id="div1">
             <label for="custas" class>Valor a pagar:</label>
