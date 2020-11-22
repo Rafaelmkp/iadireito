@@ -73,8 +73,13 @@ $app->post('/submit-summons', function () {
     // var_dump((bool)$summons->getdias());
     // var_dump($summons->getfim());
     // var_dump((bool)$summons->getyesno());
-    // var_dump($summons->getcustas());
+    // var_dump((float)$summons->getcustas());
     // var_dump($summons->getuser_id());
+    // var_dump($summons->getadvautor());
+    // var_dump($summons->getoabadvautor());
+    // var_dump($summons->getreu());
+    // var_dump($summons->getoabadvreu());
+    // exit;
 
     $summons->saveClassification();
 

@@ -155,22 +155,25 @@ class Summons extends Model {
 
     public function saveClassifiedLawyer($lawyer = [], $oab = [], $pclas_id)
     {
-        $sql = new Sql();
-        array_map(function ($lawyer, $oab){
-            $sql->select("CALL processos.salva_advogados(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
-                ':IADV_NOME' => $oab,
-                ':IADV_OAB' => $lawyer,
+        $organizedAdv = array_combine($oab, $lawyer);
+
+        foreach($organizedAdv as $key => $value) {
+            $sql = new Sql();
+
+            $sql->query("CALL processos.salva_advogados(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
+                ':IADV_NOME' => $key,
+                ':IADV_OAB' => $value,
                 ':PCLAS_ID' => $pclas_id
             ]);
-        });
+        }
     }
 
     public function saveClassifiedSide($sides = [], $is_reu, $pclas_id)
     {
-        $sql = new Sql();
-
         foreach($sides as $value) {
-            $sql->select("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
+            $sql = new Sql();
+
+            $sql->query("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
                 ':IPARTES_NOME' => $value,
                 ':IS_REU' => $is_reu,
                 ':PCLAS_ID' => $pclas_id
