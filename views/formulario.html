@@ -32,6 +32,9 @@
           <button type="button" onclick="window.location.href='/new-summons'">
             Buscar nova publicação
           </button>
+          <button type="button" onclick="window.location.href='/logout'">
+            Logout
+          </button>
           <br /><br />
           <!--FIM DE TESTE / BOTÃO DEFINITIVO A INSERIR-->
           <label for="conteúdo">Nota de expediente:</label>

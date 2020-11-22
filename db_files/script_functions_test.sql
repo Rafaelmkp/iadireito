@@ -43,7 +43,10 @@ select * from select_pub_nao_classif();
 select * from processos.publicacao_leitura;
 
 delete from processos.publicacao_leitura;
+delete from processos.publicacoes_classificadas;
 --necessario criar trigger para exclusao de publicaca_leitura
+
+
 
 --PROCEDURE SALVA CLASSIFICACAO
 drop procedure if exists processos.salva_pub_class;
@@ -190,7 +193,6 @@ call processos.salva_pub_class(
 		1.0,
 		1,
 		0);
-			
 
 --teste call procedure adv
 call salva_advogado(
