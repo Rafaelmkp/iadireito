@@ -58,30 +58,28 @@ $app->post('/submit-summons', function () {
     $summons->setData($_POST);
 
     //APENAS TESTE
-    // var_dump($summons->getpub_id());
-    // var_dump($summons->getestrutura());
-    // var_dump($summons->getn_processo());
-    // var_dump($summons->getnatureza());
-    // var_dump($summons->getvara());
-    // var_dump($summons->getestado());
-    // var_dump($summons->getcidade());
-    // var_dump($summons->getjuiz());
-    // var_dump($summons->getrecurso());
-    // var_dump($summons->gettipo_peca());
-    // var_dump($summons->getinicio());
-    // var_dump($summons->getdias_prazo());
-    // var_dump((bool)$summons->getdias());
-    // var_dump($summons->getfim());
-    // var_dump((bool)$summons->getyesno());
-    // var_dump((float)$summons->getcustas());
-    // var_dump($summons->getuser_id());
-    // var_dump($summons->getadvautor());
-    // var_dump($summons->getoabadvautor());
-    // var_dump($summons->getreu());
-    // var_dump($summons->getoabadvreu());
-    // exit;
-
-    $summons->saveClassification();
+    var_dump((int)$summons->getpub_id());
+    var_dump((int)$summons->getestrutura());
+    var_dump(htmlOptions::nullifyString($summons->getn_processo()));
+    var_dump((int)$summons->getnatureza());
+    var_dump(htmlOptions::nullifyString($summons->getvara()));
+    var_dump(htmlOptions::nullifyString($summons->getestado()));
+    var_dump(htmlOptions::nullifyString($summons->getcidade()));
+    var_dump(htmlOptions::nullifyString($summons->getjuiz()));
+    var_dump((int)$summons->getrecurso());
+    var_dump((int)$summons->gettipo_peca());
+    var_dump(htmlOptions::nullifyString($summons->getinicio()));
+    var_dump((int)htmlOptions::nullifyString($summons->getdias_prazo()));
+    var_dump((bool)$summons->getdias());
+    var_dump(htmlOptions::nullifyString($summons->getfim()));
+    var_dump((bool)$summons->getyesno());
+    var_dump((float)htmlOptions::nullifyString($summons->getcustas()));
+    var_dump($summons->getuser_id());
+    var_dump(htmlOptions::nullifyString($summons->getadvautor()));
+    var_dump(htmlOptions::nullifyString($summons->getoabadvautor()));
+    var_dump(htmlOptions::nullifyString($summons->getreu()));
+    var_dump(htmlOptions::nullifyString($summons->getoabadvreu()));
+    exit;
 
     unset($_SESSION[Summons::SESSION]);
     

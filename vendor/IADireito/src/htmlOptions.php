@@ -33,5 +33,23 @@ class htmlOptions extends Model {
 
         return $sql->select("SELECT nat_id, nat_descricao FROM processos.natureza_processual");
     }
+
+    public static function nullifyString($string) 
+    {
+        $retString;
+
+        if($string === '') {
+            $retString = NULL;
+        } else {
+            if (gettype($string) == "array") {
+                foreach($string as &$value) {
+                    $value = htmlOptions::nullifyString($value);
+                }
+            }
+            $retString = $string;
+        }
+
+        return $retString;
+    }
 }
 ?>

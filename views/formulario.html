@@ -55,9 +55,13 @@
         <div class="dados">
           <label for="estrutura">Estrutura:</label>
           <select name="estrutura" id="estrutura">
-            {loop="$estrutura_jud"}
+            {loop="$estrutura_jud"} {if="$value.est_id != '1'"}
             <option value="{$value.est_id}">{$value.est_descricao}</option>
-            {/loop}
+            {else}
+            <option selected="selected" value="{$value.est_id}">
+              {$value.est_descricao}
+            </option>
+            {/if} {/loop}
           </select>
           <br /><br />
           <label for="n_processo">Número do processo:</label>
@@ -65,9 +69,13 @@
           <br /><br />
           <label for="natureza">Natureza:</label>
           <select name="natureza" id="natureza">
-            {loop="$natureza"}
+            {loop="$natureza"} {if="$value.nat_id != '1'"}
             <option value="{$value.nat_id}">{$value.nat_descricao}</option>
-            {/loop}
+            {else}
+            <option selected="selected" value="{$value.nat_id}">
+              {$value.nat_descricao}
+            </option>
+            {/if} {/loop}
           </select>
           <br /><br />
           <label name="vara">Vara:</label>
@@ -75,7 +83,7 @@
           <br /><br />
           <label for="vara">Estado:</label>
           <select name="estado" id="estado" onchange="buscaCidades(this.value)">
-            <option value="branco"></option>
+            <option value=""></option>
             <option value="AC">AC</option>
             <option value="AL">AL</option>
             <option value="AP">AP</option>
@@ -153,16 +161,24 @@
 
           <label for="recurso">Tipo de decisão:</label>
           <select name="recurso" id="recurso">
-            {loop="$decisao_tipo"}
+            {loop="$decisao_tipo"} {if="$value.dec_id != '1'"}
             <option value="{$value.dec_id}">{$value.dec_descricao}</option>
-            {/loop}
+            {else}
+            <option selected="selected" value="{$value.dec_id}">
+              {$value.dec_descricao}
+            </option>
+            {/if} {/loop}
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
           <select name="tipo_peca" id="tipo_peca">
-            {loop="$peca_produzir"}
+            {loop="$peca_produzir"} {if="$value.pec_id != '1'"}
             <option value="{$value.pec_id}">{$value.pec_descricao}</option>
-            {/loop}
+            {else}
+            <option selected="selected" value="{$value.pec_id}">
+              {$value.pec_descricao}
+            </option>
+            {/if} {/loop}
           </select>
           <br /><br />
           <label for="inicio_prazo">Início do Prazo:</label>

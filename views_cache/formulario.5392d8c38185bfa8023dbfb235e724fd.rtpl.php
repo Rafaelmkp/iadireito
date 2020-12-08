@@ -55,9 +55,13 @@
         <div class="dados">
           <label for="estrutura">Estrutura:</label>
           <select name="estrutura" id="estrutura">
-            <?php $counter1=-1;  if( isset($estrutura_jud) && ( is_array($estrutura_jud) || $estrutura_jud instanceof Traversable ) && sizeof($estrutura_jud) ) foreach( $estrutura_jud as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($estrutura_jud) && ( is_array($estrutura_jud) || $estrutura_jud instanceof Traversable ) && sizeof($estrutura_jud) ) foreach( $estrutura_jud as $key1 => $value1 ){ $counter1++; ?> <?php if( $value1["est_id"] != '1' ){ ?>
             <option value="<?php echo htmlspecialchars( $value1["est_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["est_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-            <?php } ?>
+            <?php }else{ ?>
+            <option selected="selected" value="<?php echo htmlspecialchars( $value1["est_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["est_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
+            <?php } ?> <?php } ?>
           </select>
           <br /><br />
           <label for="n_processo">Número do processo:</label>
@@ -65,9 +69,13 @@
           <br /><br />
           <label for="natureza">Natureza:</label>
           <select name="natureza" id="natureza">
-            <?php $counter1=-1;  if( isset($natureza) && ( is_array($natureza) || $natureza instanceof Traversable ) && sizeof($natureza) ) foreach( $natureza as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($natureza) && ( is_array($natureza) || $natureza instanceof Traversable ) && sizeof($natureza) ) foreach( $natureza as $key1 => $value1 ){ $counter1++; ?> <?php if( $value1["nat_id"] != '1' ){ ?>
             <option value="<?php echo htmlspecialchars( $value1["nat_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nat_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-            <?php } ?>
+            <?php }else{ ?>
+            <option selected="selected" value="<?php echo htmlspecialchars( $value1["nat_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["nat_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
+            <?php } ?> <?php } ?>
           </select>
           <br /><br />
           <label name="vara">Vara:</label>
@@ -75,7 +83,7 @@
           <br /><br />
           <label for="vara">Estado:</label>
           <select name="estado" id="estado" onchange="buscaCidades(this.value)">
-            <option value="branco"></option>
+            <option value=""></option>
             <option value="AC">AC</option>
             <option value="AL">AL</option>
             <option value="AP">AP</option>
@@ -153,16 +161,24 @@
 
           <label for="recurso">Tipo de decisão:</label>
           <select name="recurso" id="recurso">
-            <?php $counter1=-1;  if( isset($decisao_tipo) && ( is_array($decisao_tipo) || $decisao_tipo instanceof Traversable ) && sizeof($decisao_tipo) ) foreach( $decisao_tipo as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($decisao_tipo) && ( is_array($decisao_tipo) || $decisao_tipo instanceof Traversable ) && sizeof($decisao_tipo) ) foreach( $decisao_tipo as $key1 => $value1 ){ $counter1++; ?> <?php if( $value1["dec_id"] != '1' ){ ?>
             <option value="<?php echo htmlspecialchars( $value1["dec_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["dec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-            <?php } ?>
+            <?php }else{ ?>
+            <option selected="selected" value="<?php echo htmlspecialchars( $value1["dec_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["dec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
+            <?php } ?> <?php } ?>
           </select>
           <br /><br />
           <label for="tipo_peca">Peça a produzir:</label>
           <select name="tipo_peca" id="tipo_peca">
-            <?php $counter1=-1;  if( isset($peca_produzir) && ( is_array($peca_produzir) || $peca_produzir instanceof Traversable ) && sizeof($peca_produzir) ) foreach( $peca_produzir as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($peca_produzir) && ( is_array($peca_produzir) || $peca_produzir instanceof Traversable ) && sizeof($peca_produzir) ) foreach( $peca_produzir as $key1 => $value1 ){ $counter1++; ?> <?php if( $value1["pec_id"] != '1' ){ ?>
             <option value="<?php echo htmlspecialchars( $value1["pec_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["pec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-            <?php } ?>
+            <?php }else{ ?>
+            <option selected="selected" value="<?php echo htmlspecialchars( $value1["pec_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <?php echo htmlspecialchars( $value1["pec_descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </option>
+            <?php } ?> <?php } ?>
           </select>
           <br /><br />
           <label for="inicio_prazo">Início do Prazo:</label>

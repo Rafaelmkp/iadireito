@@ -4,6 +4,7 @@ namespace IADireito;
 
 use \IADireito\DB\Sql;
 use \IADireito\Model;
+use \IADireito\htmlOptions;
 
 class Summons extends Model {
 
@@ -74,8 +75,6 @@ class Summons extends Model {
     {
         $idNewPub = 0;
 
-        $errorMsg = 0;
-
         //call procedure publicacao
         //FUNCTION RECEBE EDEREÇO DA VARIAVEL
         $isSummonsClassified = $this->saveClassifiedSummons($idNewPub);
@@ -122,23 +121,23 @@ class Summons extends Model {
             :IUSER_ID, :IDRETURN
             )",
             [
-                'IPUB_OLD_ID' => $this->getpub_id(),
-                'IEST_ID' => $this->getestrutura(),
-                'IPCLAS_NUM_PROCESSO' => $this->getn_processo(),
-                'INAT_ID' => $this->getnatureza(),
-                'IPCLAS_VARA' => $this->getvara(),
-                'IPCLAS_ESTADO' => $this->getestado(),
-                'IPCLAS_COMARCA' => $this->getcidade(),
-                'IPCLAS_JUIZ' => $this->getjuiz(),
-                'IDEC_ID' => $this->getrecurso(),
-                'IPEC_ID' => $this->gettipo_peca(),
-                'IPCLAS_INICIO_PRAZO' => $this->getinicio(),
-                'IPCLAS_PRAZO' => $this->getdias_prazo(),
+                'IPUB_OLD_ID' => (int)$this->getpub_id(),
+                'IEST_ID' => (int)$this->getestrutura(),
+                'IPCLAS_NUM_PROCESSO' => htmlOptions::nullifyString($this->getn_processo()),
+                'INAT_ID' => (int)$this->getnatureza(),
+                'IPCLAS_VARA' => htmlOptions::nullifyString($this->getvara()),//
+                'IPCLAS_ESTADO' => htmlOptions::nullifyString($this->getestado()),//
+                'IPCLAS_COMARCA' => htmlOptions::nullifyString($this->getcidade()),//
+                'IPCLAS_JUIZ' => htmlOptions::nullifyString($this->getjuiz()),//
+                'IDEC_ID' => (int)$this->getrecurso(),
+                'IPEC_ID' => (int)$this->gettipo_peca(),
+                'IPCLAS_INICIO_PRAZO' => htmlOptions::nullifyString($this->getinicio()),
+                'IPCLAS_PRAZO' => (int)htmlOptions::nullifyString($this->getdias_prazo()),
                 'IPCLAS_DIAS_UTEIS' => (bool)$this->getdias(),
-                'IPCLAS_FIM_PRAZO' => $this->getfim(),
+                'IPCLAS_FIM_PRAZO' => htmlOptions::nullifyString($this->getfim()),
                 'IPCLAS_HA_CUSTAS' =>(bool)$this->getyesno(),
-                'IPCLAS_VAL_CUSTAS' => (float)$this->getcustas(),
-                'IUSER_ID' => 1,
+                'IPCLAS_VAL_CUSTAS' => (float)htmlOptions::nullifyString($this->getcustas()),
+                'IUSER_ID' => $this->getuser_id(),
                 'IDRETURN'=>0
         ]);
         
@@ -147,6 +146,7 @@ class Summons extends Model {
             return true;
 
         } catch (\Exception $e) {
+            //print_r($e);
             $errorMsg = $sql->getError();
             print_r($errorMsg);
             return false;
@@ -160,11 +160,20 @@ class Summons extends Model {
         foreach($organizedAdv as $key => $value) {
             $sql = new Sql();
 
-            $sql->query("CALL processos.salva_advogados(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
-                ':IADV_NOME' => $key,
-                ':IADV_OAB' => $value,
-                ':PCLAS_ID' => $pclas_id
-            ]);
+            try
+            {
+                $sql->select("CALL processos.salva_advogado(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
+                    ':IADV_NOME' => $key,
+                    ':IADV_OAB' => $value,
+                    ':PCLAS_ID' => $pclas_id
+                ]);
+                return true;
+
+            } catch (\Exception $e) {
+                $errorMsg = $sql->errorInfo();
+                print_r($errorMsg);
+                return false;
+            }
         }
     }
 
@@ -173,11 +182,18 @@ class Summons extends Model {
         foreach($sides as $value) {
             $sql = new Sql();
 
-            $sql->query("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
-                ':IPARTES_NOME' => $value,
-                ':IS_REU' => $is_reu,
-                ':PCLAS_ID' => $pclas_id
-            ]);
+            try
+            {
+                $sql->query("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
+                    ':IPARTES_NOME' => $value,
+                    ':IS_REU' => $is_reu,
+                    ':PCLAS_ID' => $pclas_id
+                ]);
+            } catch (\Exception $e) {
+                $errorMsg = $sql->getError();
+                print_r($errorMsg);
+                return false;
+            }
         }
     }
 }

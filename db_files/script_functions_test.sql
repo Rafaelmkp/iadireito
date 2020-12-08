@@ -38,10 +38,6 @@ $$ language plpgsql;
 		order by pu.pub_id
 		limit 1;
 
-select * from select_pub_nao_classif();
-
-select * from processos.publicacao_leitura;
-
 delete from processos.publicacao_leitura;
 delete from processos.publicacoes_classificadas;
 --necessario criar trigger para exclusao de publicaca_leitura
@@ -175,23 +171,23 @@ select * from publicacoes_classificadas;
 	
 --teste call procedure pub_class
 call processos.salva_pub_class(
-				1,
+				4,
+		3,
+		'ddd',
 		2,
-		'prcesso 123',
-		2,
-		'2',
-		'rs',
-		'icara',
-		'juiz fulano',
+		'ds',
+		'AL',
+		'Barra de Santo Antonio',
+		'',
 		1,
 		1,
-		'2020-10-10',
-		10,
+		'2020-12-20',
+		0,
 		true,
-		'10-10-2020',
+		'2020-12-20',
 		true,
-		1.0,
-		1,
+		0,
+		3,
 		0);
 
 --teste call procedure adv

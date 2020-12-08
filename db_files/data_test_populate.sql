@@ -87,3 +87,57 @@ PUBLICACAO EXEMPLO 3
 PUBLICACAO EXEMPLO 3
 PUBLICACAO EXEMPLO 3
 PUBLICACAO EXEMPLO 3');
+
+insert into processos.publicacao_uniritter 
+values (default, 'vfr9876543', null, 444, 
+		'tj 444', null, null, null, 'hash 4567',
+		'44444444444444444444444
+
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4
+PUBLICACAO EXEMPLO 4');
+
+insert into processos.publicacao_uniritter 
+values (default, 'vfr9876543', null, 444, 
+		'tj 444', null, null, null, 'hash 4567',
+		'555555555555555555555555
+
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5
+PUBLICACAO EXEMPLO 5');
+
+insert into processos.publicacao_uniritter 
+values (default, 'vfr9876543', null, 444, 
+		'tj 444', null, null, null, 'hash 4567',
+		'666666666666666666666666
+
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6
+PUBLICACAO EXEMPLO 6');
+
+select * from select_pub_nao_classif();
+
+select * from processos.publicacao_leitura;
+
+select * from processos.publicacao_uniritter;
+
+select * from processos.publicacoes_classificadas;
+
+delete from processos.publicacao_leitura;
+
+delete from processos.publicacoes_classificadas;
