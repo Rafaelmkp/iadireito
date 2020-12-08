@@ -1,17 +1,17 @@
 body {
-  margin: 50px;
+  margin: 10px;
 }
 
 .parent {
   white-space: nowrap;
-  width: 80%;
+  width: 90%;
 }
 
 .parent > div {
   display: inline-block;
   vertical-align: top;
   white-space: normal;
-  width: 47%;
+  width: 50%;
 }
 
 div.conteudo {
@@ -23,7 +23,7 @@ div.conteudo {
 div.dados {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 50%;
+  width: 47%;
 }
 
 .hide {
@@ -32,13 +32,5 @@ div.dados {
 
 label {
   display: inline-block;
-  width: 200px;
-}
-
-input {
-  border-radius: 4px;
-}
-
-select {
-  border-radius: 4px;
+  width: 170px;
 }

@@ -22,6 +22,8 @@ values (default, ''),
        (default, 'Despacho'),
        (default, 'Sentença');
       
+select * from processos.decisao_tipo;
+      
 insert into peca_produzir
 values (default, ''),
        (default, 'Agravo de Instrumento'),
@@ -141,3 +143,9 @@ select * from processos.publicacoes_classificadas;
 delete from processos.publicacao_leitura;
 
 delete from processos.publicacoes_classificadas;
+
+delete from processos.partes;
+
+delete from processos.publicacao_advogado;
+
+delete from processos.advogado;

@@ -28,15 +28,17 @@
       <br />
       <div class="parent">
         <div class="conteudo">
-          <!--INSERIDO PARA SÓ PARA TESTES-->
-          <button type="button" onclick="window.location.href='/new-summons'">
-            Buscar nova publicação
+          <button
+            type="button"
+            name="b3"
+            onclick="window.location.href='/new-summons'"
+          >
+            Buscar nova NE
           </button>
           <button type="button" onclick="window.location.href='/logout'">
             Logout
           </button>
           <br /><br />
-          <!--FIM DE TESTE / BOTÃO DEFINITIVO A INSERIR-->
           <label for="conteúdo">Nota de expediente:</label>
           <br /><br />
           <textarea
@@ -120,40 +122,38 @@
           <input type="text" id="juiz" name="juiz" maxlength="30" size="30" />
           <br /><br />
           <div class="input_fields_wrapA">
+            <label for="autor">Autor:</label>
+            <input type="text" name="autor[]" />
             <button class="add_field_buttonA">Adicionar autor</button>
             <br /><br />
-            <label for="autor">Autor:</label
-            ><input type="text" name="autor[]" /><br /><br />
           </div>
 
           <div class="input_fields_wrapB">
-            <button class="add_field_buttonB">
-              Adicionar novo advogado do autor
-            </button>
+            <label for="advautor">Advogado:</label>
+            <input type="text" name="advautor[]" />
+            <button class="add_field_buttonB">Adicionar advogado autor</button>
             <br /><br />
-            <div>
-              <label for="advautor">Advogado:</label
-              ><input type="text" name="advautor[]" /><br /><br />
-              <label for="oabadvautor">OAB:</label>
-              <input type="text" name="oabadvautor[]" /><br /><br />
-            </div>
+            <label for="oabadvautor">OAB:</label>
+            <input type="text" name="oabadvautor[]" />
+            <br /><br />
           </div>
 
           <div class="input_fields_wrapC">
+            <label for="reu">Réu:</label>
+            <input type="text" name="reu[]" />
             <button class="add_field_buttonC">Adicionar réu</button>
             <br /><br />
-            <label for="reu">Réu:</label
-            ><input type="text" name="reu[]" /><br /><br />
           </div>
 
           <div class="input_fields_wrapD">
+            <label for="advreu">Advogado:</label>
+            <input type="text" name="advreu[]" />
             <button class="add_field_buttonD">
               Adicionar novo advogado do réu
             </button>
             <br /><br />
             <div>
-              <label for="advreu">Advogado:</label
-              ><input type="text" name="advreu[]" /><br /><br />
+              <br /><br />
               <label for="oabadvreu">OAB:</label>
               <input type="text" name="oabadvreu[]" /><br /><br />
             </div>
