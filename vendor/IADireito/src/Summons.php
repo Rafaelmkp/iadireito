@@ -83,13 +83,13 @@ class Summons extends Model {
 
             if($this->getautor()) {
                 //call procedure parte -- autor
-                $this->saveClassifiedSide($this->getautor(), false, $idNewPub);
+                $this->saveClassifiedSide(htmlOptions::nullifyString($this->getautor()), false, $idNewPub);
             }
             
             if($this->getadvautor()) {
                 //call procedure advogado -- autor
                 $this->saveClassifiedLawyer(
-                    $this->getadvautor(),$this->getoabadvautor(), $idNewPub
+                    htmlOptions::nullifyString($this->getadvautor()), htmlOptions::nullifyString($this->getoabadvautor()), $idNewPub
                 );
             }
 
@@ -155,24 +155,34 @@ class Summons extends Model {
 
     public function saveClassifiedLawyer($lawyer = [], $oab = [], $pclas_id)
     {
+        foreach($oab as $key => &$value) {
+            if(!htmlOptions::nullifyString($value)) {
+                $value = "em branco $key";
+            }
+            var_dump($value);
+        }
+
         $organizedAdv = array_combine($oab, $lawyer);
+        var_dump($organizedAdv);
 
         foreach($organizedAdv as $key => $value) {
             $sql = new Sql();
+            if(htmlOptions::nullifyString($value)){
+                var_dump($key);
+                var_dump($value);
+                try
+                {
+                    $sql->select("CALL processos.salva_advogado(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
+                        ':IADV_NOME' => $value,
+                        ':IADV_OAB' => $key,
+                        ':PCLAS_ID' => $pclas_id
+                    ]);
 
-            try
-            {
-                $sql->select("CALL processos.salva_advogado(:IADV_NOME, :IADV_OAB, :PCLAS_ID)", [
-                    ':IADV_NOME' => $key,
-                    ':IADV_OAB' => $value,
-                    ':PCLAS_ID' => $pclas_id
-                ]);
-                return true;
-
-            } catch (\Exception $e) {
-                $errorMsg = $sql->errorInfo();
-                print_r($errorMsg);
-                return false;
+                } catch (\Exception $e) {
+                    $errorMsg = $sql->errorInfo();
+                    print_r($errorMsg);
+                    return false;
+                }
             }
         }
     }
@@ -181,19 +191,23 @@ class Summons extends Model {
     {
         foreach($sides as $value) {
             $sql = new Sql();
-
-            try
+            
+            if(htmlOptions::nullifyString($value))
             {
-                $sql->query("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
-                    ':IPARTES_NOME' => $value,
-                    ':IS_REU' => $is_reu,
-                    ':PCLAS_ID' => $pclas_id
-                ]);
-            } catch (\Exception $e) {
-                $errorMsg = $sql->getError();
-                print_r($errorMsg);
-                return false;
-            }
+                var_dump($value);
+                try
+                {
+                    $sql->query("CALL processos.salva_partes(:IPARTES_NOME, :IS_REU, :PCLAS_ID)", [
+                        ':IPARTES_NOME' => $value,
+                        ':IS_REU' => $is_reu,
+                        ':PCLAS_ID' => $pclas_id
+                    ]);
+                } catch (\Exception $e) {
+                    $errorMsg = $sql->getError();
+                    print_r($errorMsg);
+                    return false;
+                }
+            }           
         }
     }
 }

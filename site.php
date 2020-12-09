@@ -79,12 +79,16 @@ $app->post('/submit-summons', function () {
     var_dump(htmlOptions::nullifyString($summons->getoabadvautor()));
     var_dump(htmlOptions::nullifyString($summons->getreu()));
     var_dump(htmlOptions::nullifyString($summons->getoabadvreu()));
-    exit;
+    // exit;
+
+    $summons->saveClassification();
 
     unset($_SESSION[Summons::SESSION]);
     
-    Header("Location: /");
     exit;
+
+    Header("Location: /");
+    // exit;
 });
 
 $app->get("/login", function() {

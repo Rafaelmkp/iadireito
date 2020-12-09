@@ -140,6 +140,14 @@ select * from processos.publicacao_uniritter;
 
 select * from processos.publicacoes_classificadas;
 
+select * from processos.advogado;
+
+select * from processos.partes;
+
+select * from processos.publicacao_advogado;
+
+
+
 delete from processos.publicacao_leitura;
 
 delete from processos.publicacoes_classificadas;
