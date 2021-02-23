@@ -171,14 +171,14 @@ select * from publicacoes_classificadas;
 	
 --teste call procedure pub_class
 call processos.salva_pub_class(
-				4,
-		3,
-		'ddd',
-		2,
-		'ds',
-		'AL',
-		'Barra de Santo Antonio',
-		'',
+			4,
+			3,
+			'ddd',
+			2,
+			'ds',
+			'AL',
+			'Barra de Santo Antonio',
+			'',
 		1,
 		1,
 		'2020-12-20',

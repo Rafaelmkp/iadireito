@@ -93,7 +93,7 @@ $app->post('/submit-summons', function () {
 
 $app->get("/login", function() {
 
-    //verificacao especifica para a pagian de login
+    //verificacao especifica para a pagina de login
     //se usuario logado, nao deve ter acesso a funcao login
     if(isset($_SESSION[User::SESSION])) {
         header("Location: /");
